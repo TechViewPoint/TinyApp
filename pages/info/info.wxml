@@ -1,0 +1,18 @@
+<!--index.wxml-->
+<view class="container">
+  
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+    <picker bindchange="bindBuildingPickerChange" value="{{buildingIndex}}" range="{{buildingArray}}">
+    <view class="picker">
+      楼号：{{buildingArray[buildingIndex]}}
+    </view>
+  </picker>
+    <br/>
+    <picker bindchange="bindUnitPickerChange" value="{{unitIndex}}" range="{{unitArray}}">
+    <view class="picker">
+      单元号：{{unitArray[unitIndex]}}
+    </view>
+  </picker>
+  </view>
+</view>
