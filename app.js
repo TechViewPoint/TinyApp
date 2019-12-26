@@ -2,13 +2,13 @@
 App({
   onLaunch: function () {
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    //var logs = wx.getStorageSync('logs') || []
+    //logs.unshift(Date.now())
+    //wx.setStorageSync('logs', logs)
 
-    this.globalData = wx.getStorageSync('globalData') || {}
-    console.log(this.globalData);
-    wx.setStorageSync('globalData', this.globalData);
+    this.userInfoData = wx.getStorageSync('userInfoData') || {}
+    console.log(this.userInfoData);
+    wx.setStorageSync('userInfoData', this.userInfoData);
     
 
 
@@ -44,7 +44,7 @@ App({
   {
     
   },
-
+  userInfoData:{},
   globalData: {
     userInfo: { }
   }

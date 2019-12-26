@@ -1,10 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var userItemData = 
-{
-  itemInfo: { name: '123', building: 19, unit: 1, level: 6, house: 0, printType: 0, },
-}
+
 Page({
   data: {
     motto: 'Hello World',
@@ -24,16 +21,55 @@ Page({
     })
   },
   bindPrintPictureTap: function () {
-    userItemData.itemInfo.printType = 0;
-    wx.navigateTo({
-      url: '../info/info'
-    })
+    wx.chooseImage({
+      success(res) {
+        const tempFilePaths = res.tempFilePaths;
+        app.userInfoData.imageFiles = tempFilePaths;
+        /*wx.uploadFile({
+          url: 'https://localhost:44381/', //仅为示例，非真实的接口地址
+          filePath: tempFilePaths[0],
+          name: 'file',
+          formData: {
+            'user': 'test'
+          },
+          success(res) {
+            const data = res.data
+            console,log("ok");
+            //do something
+            
+          }
+        })*/
+        wx.navigateTo({
+
+          url: '../info/info'
+        })
+      }
+    });
+    
   },
   bindPrintDocTap: function () {
-    userItemData.itemInfo.printType = 1;
-    wx.navigateTo({
-      url: '../info/info'
+
+    wx.chooseMessageFile({
+      type: 'file',
+      success(res){
+        const tempFilePaths = res.tempFiles;
+        for (var i = 0; i < tempFilePaths.length;i++)
+        {
+          console.log(tempFilePaths[i]);
+        }
+        wx.openDocument({
+          filePath: tempFilePaths[0],
+          success: (res) => {
+            console.log('读取成功', res)
+          },
+          fail: (err) => {
+            console.log('读取失败', err)
+          }
+        })
+      }
     })
+    
+    
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
