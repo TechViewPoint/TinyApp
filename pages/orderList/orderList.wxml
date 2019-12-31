@@ -1,0 +1,19 @@
+<!--pages/orderlist/orderList.wxml-->
+<view class="container" scroll-x="false">
+<i-cell-group wx:if="{{orders.length}}">
+        <i-cell wx:for="{{orders}}" wx:key="userOpenId"  wx:for-item="order">
+           
+            <text class="breakword">{{order.userName}}</text>
+
+            <view class="flex justify-end">
+                <text>{{order.state}}</text>
+            </view>
+          <text>-------------------------</text>
+        </i-cell>
+    </i-cell-group>
+    <view class="flex justify-center align-center" style="height: 300px" wx:else>
+        <text>
+			没有任何订单
+		</text>
+ </view>
+ </view>

@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": 
+  {
+    "i-button": "/lib/iview/button/index"
+  }
 }

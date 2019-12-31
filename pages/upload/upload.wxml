@@ -1,0 +1,62 @@
+<!--pages/upload.wxml-->
+<view class="container" scroll-x="false">
+  <view class="flex justify-center" wx:if="{{tasks.length}}">
+  <i-cell-group >
+    <i-cell wx:for="{{tasks}}" wx:key="{{ item.name }}">
+      <i-card class="flex align-center">
+        <view slot="content">
+        <image mode="aspectFit" src="{{item.filePath}}"></image>
+        <text>{{item.name}}</text>
+        </view>
+        <view slot="footer">
+        <view class="flex align-center" wx:if="{{item.state==UPLOADING}}">
+        <i-progress class="grow" percent="{{item.progress}}"></i-progress>
+        <i-button inline bind:click="abort" data-task="{{item}}" size="small" type="error">
+          取消
+        </i-button>
+      </view>
+      <view class="flex justify-end" wx:if="{{item.state==PROCESSING}}">
+        <i-spin></i-spin>
+        <text>服务器处理中...</text>
+      </view>
+      <view class="flex justify-end" wx:if="{{item.state==FINISHED}}">
+        <text>已完成</text>
+      </view>
+      <view class="flex align-center" wx:if="{{item.state==ERROR}}">
+        <i-alert data-task="{{item}}" type="error">
+          {{item.resp}}
+        </i-alert>
+        <i-button bind:click="closealert" data-task="{{item}}">
+          知道了
+        </i-button>
+      </view>
+        </view>
+
+      </i-card>
+      
+      
+    </i-cell>
+  </i-cell-group>
+  </view>
+  <view class="flex justify-center align-center" style="height: 200px" wx:else>
+    <text>
+			还没有选择任何文件
+		</text>
+  </view>
+  <view class="bottombar align-button">
+    <i-panel>
+      <view class="flex justify-end">
+        <i-button bind:click="handleModelOpen" type="success">
+          添加
+        </i-button>
+        <i-button bind:click="nextstep" type="primary">
+          下一步
+        </i-button>
+      </view>
+    </i-panel>
+  </view>
+</view>
+
+<i-modal title="从哪里获取文件" visible="{{ modelVisible }}" actions="{{ actions }}" action-mode="{{ vertical }}" bind:click="handleClickChooseFileBtn">
+
+</i-modal>

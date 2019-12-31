@@ -1,18 +1,28 @@
-<!--index.wxml-->
-<view class="container">
-  
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-    <picker bindchange="bindBuildingPickerChange" value="{{buildingIndex}}" range="{{buildingArray}}">
-    <view class="picker">
-      楼号：{{buildingArray[buildingIndex]}}
-    </view>
-  </picker>
-    <br/>
-    <picker bindchange="bindUnitPickerChange" value="{{unitIndex}}" range="{{unitArray}}">
-    <view class="picker">
-      单元号：{{unitArray[unitIndex]}}
-    </view>
-  </picker>
-  </view>
-</view>
+<i-panel title="地址信息">
+    <i-input value="{{ name }}" title="收货人" placeholder="名字" />
+    <i-input value="{{ phoneNum }}" type="number" title="联系电话" placeholder="请输入手机号" />
+    <i-input value="{{ address }}" type="textarea" title="详细地址" placeholder="详细地址(仅限临桂时代花园内部地址,否则不发货)" maxlength="50" />
+    <i-input value="{{ comment }}" title="备注" placeholder="备注信息"/>
+</i-panel>
+
+<i-panel title="打印设置">
+     <i-radio value="塑胶膜封装" disabled="{{disable}}" checked="{{protectionChecked}}" bindchange="handleProtectionChange" position="right">
+    </i-radio>
+    <i-cell-group >
+    <i-cell title="打印份数">
+        <i-input-number value="{{ copy }}" min="1" max="100" bindchange="handleCopyChange" slot="footer"/>
+    </i-cell>
+       
+        
+    </i-cell-group>
+</i-panel>
+
+<i-panel title="消费总额" >
+    
+    <i-input value="{{ value7 }}" type="number" right error title="人民币" mode="wrapped" placeholder="0" disabled/>
+</i-panel>
+<i-button bind:click="submit" type="success" shape="circle">提交订单</i-button>
+
+<i-modal title="提交订单" visible="{{ modelVisible }}" actions="{{ submitActions }}" bind:click="handleSubmitClick">
+    <view>注意:提交后不能修改</view>
+</i-modal>

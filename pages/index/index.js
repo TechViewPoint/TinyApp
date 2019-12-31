@@ -1,76 +1,28 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+const DB = wx.cloud.database()
 Page({
   data: {
     motto: 'Hello World',
     printPicture:'打印照片',
     printDoc: '打印文档',
-    
     userInfo: {},
-    
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      
-      url: '../logs/logs'
-    })
-  },
-  bindPrintPictureTap: function () {
-    wx.chooseImage({
-      success(res) {
-        const tempFilePaths = res.tempFilePaths;
-        app.userInfoData.imageFiles = tempFilePaths;
-        /*wx.uploadFile({
-          url: 'https://localhost:44381/', //仅为示例，非真实的接口地址
-          filePath: tempFilePaths[0],
-          name: 'file',
-          formData: {
-            'user': 'test'
-          },
-          success(res) {
-            const data = res.data
-            console,log("ok");
-            //do something
-            
-          }
-        })*/
-        wx.navigateTo({
 
-          url: '../info/info'
-        })
-      }
-    });
-    
+  bindPrintPictureTap: function () {
+    wx.navigateTo({
+      url: '../upload/upload'
+    })
   },
   bindPrintDocTap: function () {
-
-    wx.chooseMessageFile({
-      type: 'file',
-      success(res){
-        const tempFilePaths = res.tempFiles;
-        for (var i = 0; i < tempFilePaths.length;i++)
-        {
-          console.log(tempFilePaths[i]);
-        }
-        wx.openDocument({
-          filePath: tempFilePaths[0],
-          success: (res) => {
-            console.log('读取成功', res)
-          },
-          fail: (err) => {
-            console.log('读取失败', err)
-          }
-        })
-      }
+    wx.navigateTo({
+      url: '../upload/upload'
     })
-    
-    
   },
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -105,6 +57,51 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+
+  handleClick:function(){
+    wx.showModal({
+      content: "不可重复上传文件名相同的文件，如果此文件之前上传失败，请先从列表中将其关闭",
+      showCancel: 1
+    });
+  },
+
+  addUser:function(){
+    DB.collection("user").add({
+      data:{
+        name:"roy",
+        gender:true
+      }
+    })
+  },
+
+  deleteUser: function () {
+    DB.collection("user").delete({
+      data: {
+        name: "roy",
+        gender: true
+      }
+    })
+  },
+ 
+  callCloudFun:function(){
+    wx.cloud.callFunction({
+      name:"getOpenId",
+      success(res){
+        console.log("ok",res);
+      },
+      fail(res)
+      {
+        console.log("fail", res);
+      }
+    })
+  },
+
+  lookupOrder()
+  {
+    wx.navigateTo({
+      url: '../orderList/orderList'
     })
   }
 })

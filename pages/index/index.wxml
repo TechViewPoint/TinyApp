@@ -1,15 +1,11 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    
+<view class="container" scroll-x="false">
     <button bindtap="bindPrintPictureTap">{{printPicture}}</button>
     <button bindtap="bindPrintDocTap">{{printDoc}}</button>
-  </view>
+    <i-button type="primary" bind:click="handleClick">这是一个按钮</i-button>
+    <i-button type="primary" bind:click="addUser">添加用户</i-button>
+    <i-button type="primary" bind:click="deleteUser">删除</i-button>
+    <i-button type="primary" bind:click="findUser">查找</i-button>
+    <i-button type="primary" bind:click="callCloudFun">这是一个按钮</i-button>
+    <i-button type="primary" bind:click="lookupOrder">查看订单</i-button>
 </view>
