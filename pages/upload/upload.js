@@ -21,12 +21,12 @@ Page({
     actions:[
         {
           name: '从相册获取',
-          color: '#ff9900',
+          
           icon: 'picture'
         },
         {
           name: '从聊天记录获取',
-          color: '#ff9900',
+          
           icon: 'interactive'
         }       
     ],
@@ -177,33 +177,38 @@ Page({
   },
 
   sethandler: function (t, a) {
-    console.log(a.path.split('/').pop())
-    var n = this, 
+    //console.log(a.path.split('/').pop())
     
+    var n = this,
     s = wx.cloud.uploadFile({
-      cloudPath: a.path.split('/').pop(),    
+      cloudPath: a.path.split('.').pop(),
       filePath: a.path,
       success: function (e) {
-       
+        
+        console.log("back info ", e);
+        t.cloudId = e.fileID;
         //t.resp = JSON.parse(e.data);
         t.state = (200 == e.statusCode ? "FINISHED" : "ERROR");
-        console.log("sss",t.state);
         n.update(t);
       },
       fail: function () {
         t.state = "ERROR", t.resp = "网络错误，请在稳定的网络环境下重试", n.update(t);
       }
     });
+
     return this.handlers.set(a.name, s), s;
   },
 
   upload: function (t) {
     console.log("fileinfo",t);
-    var e = this, a = {
+    var e = this,
+
+    a = {
       name: t.name,
       state: "UPLOADING",
       progress: 0,
-      filePath:t.path
+      filePath:t.path,
+      cloudId:'',
     };
     
     t.size > 10485760 ? (a.state = "ERROR", a.resp = "文件大小不能超过10MB") : this.sethandler(a, t).onProgressUpdate(function (t) {
@@ -215,6 +220,7 @@ Page({
 
   nextstep: function () {
     console.log("task",this.tasks);
+    var that = this;
     if (this.data.tasks.length == 0) {
       //if you dont choose any item it will not go on.
       wx.showModal({
@@ -224,10 +230,12 @@ Page({
       return;
     }
     var t = function () {
-      
+      //save task info to userInfoData in app.js
+      e.userInfoData.tasks = that.data.tasks;
+      console.log("dada", e.userInfoData.tasks);
       wx.navigateTo({
         url: "/pages/info/info"
-      })    
+      })
     };
     this.data.tasks.map(function (t) {
       return t.state;
@@ -258,6 +266,13 @@ Page({
     {
       this.choose();
     }
+    this.setData({
+      modelVisible: false
+    });
+  },
+
+  closeActionSheet()
+  {
     this.setData({
       modelVisible: false
     });

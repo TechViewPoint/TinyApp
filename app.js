@@ -3,7 +3,7 @@ App({
   onLaunch: function () {
     var that = this;
     this.userInfoData = wx.getStorageSync('userInfoData') || {}
-    
+    this.fillUserInfoData();
     wx.setStorageSync('userInfoData', this.userInfoData);
     
     //cloud env init
@@ -14,10 +14,11 @@ App({
     wx.cloud.callFunction(
       {
         name: "getOpenId",
-        success(res) {
-          
+        success(res)
+        {
           that.userInfoData.openid = res.result.openid;
           console.log("getOpenid Ok", that.userInfoData.openid);
+          wx.setStorageSync('userInfoData', that.userInfoData);
         },
       })
     
@@ -51,10 +52,22 @@ App({
       }
     })
     */
+  },
 
-
-    
-
+  fillUserInfoData()
+  {
+    if(this.userInfoData.name==null)
+    {
+      this.userInfoData.name = "";
+    }
+    if(this.userInfoData.address ==null)
+    {
+      this.userInfoData.address = "";
+    }
+    if (this.userInfoData.phoneNum == null)
+    {
+      this.userInfoData.phoneNum = "";
+    }
   },
 
   userInfoData:{},

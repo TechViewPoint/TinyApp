@@ -1,8 +1,12 @@
 {
-  
+  "navigationBarTitleText": "自打印-我的订单",
   "usingComponents": 
   {
-    "i-button": "/lib/iview/button/index",
+    "i-swipeout": "/lib/iview/swipeout/index",
+    "i-card": "/lib/iview/card/index",
+    "i-icon": "/lib/iview/icon/index",
+    "i-action-sheet": "/lib/iview/action-sheet/index",
+    
     "i-cell-group": "/lib/iview/cell-group/index",
     "i-cell": "/lib/iview/cell/index",
     

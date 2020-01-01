@@ -1,8 +1,7 @@
 <!--pages/upload.wxml-->
-<view class="container" scroll-x="false">
   <view class="flex justify-center" wx:if="{{tasks.length}}">
-  <i-cell-group >
-    <i-cell wx:for="{{tasks}}" wx:key="{{ item.name }}">
+  <i-cell-group scroll-x="false">
+    <i-cell wx:for="{{tasks}}" wx:key="{{ item }}">
       <i-card class="flex align-center">
         <view slot="content">
         <image mode="aspectFit" src="{{item.filePath}}"></image>
@@ -46,17 +45,19 @@
   <view class="bottombar align-button">
     <i-panel>
       <view class="flex justify-end">
-        <i-button bind:click="handleModelOpen" type="success">
+        <i-button bind:click="handleModelOpen" shape="circle" size="large" type="success">
           添加
         </i-button>
-        <i-button bind:click="nextstep" type="primary">
+        <i-button bind:click="nextstep" shape="circle" size="large" type="primary">
           下一步
         </i-button>
       </view>
     </i-panel>
   </view>
-</view>
 
-<i-modal title="从哪里获取文件" visible="{{ modelVisible }}" actions="{{ actions }}" action-mode="{{ vertical }}" bind:click="handleClickChooseFileBtn">
+<i-action-sheet visible="{{ modelVisible }}" actions="{{ actions }}" show-cancel bind:cancel="closeActionSheet" bind:click="handleClickChooseFileBtn" />
 
-</i-modal>
+<!--<i-modal title="从哪里获取文件" visible="{{ modelVisible }}" actions="{{ actions }}" action-mode="{{ vertical }}" bind:click="handleClickChooseFileBtn">
+
+
+</i-modal>-->

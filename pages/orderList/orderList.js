@@ -5,7 +5,8 @@ const app = getApp();
 Page({
 
   data: {
-    orders: []
+    orders: [],
+    
   },
 
   onLoad: function (options) {
@@ -23,6 +24,11 @@ Page({
         success: function (res) {
 
           //handleData(res.data);
+          for (var i = 0; i < res.data.length;i++)
+          {
+            res.data[i].dateTimeStr = that.dateToString(res.data[i].dateTime);
+            res.data[i].description = res.data[i].items.length.toString()+"个项目";
+          }
           that.setData(
             {
               orders: res.data
@@ -80,6 +86,23 @@ Page({
       case 4:
       return "已完成";
     }
-  }
+  },
+  actionsTap({detail})
+  {
+    console.log(detail);
+  },
+  dateToString: function (date) {
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString();
+    var day = (date.getDate()).toString();
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+    var dateTime = year + "-" + month + "-" + day;
+    return dateTime;
+  },
   
 })

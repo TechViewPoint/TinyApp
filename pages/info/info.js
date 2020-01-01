@@ -1,4 +1,6 @@
 //info.js
+const { $Message } = require('../../lib/iview/base/index');
+const { $Toast } = require('../../lib/iview/base/index');
 const app = getApp()
 const DB = wx.cloud.database()
 Page({
@@ -25,7 +27,7 @@ Page({
     comment: '',
     value5: '',
     value6: '',
-    value7: '',
+    totalPrice: 0,
     protectionChecked: false,
     disabled: false,
     onePicturePrice:0.5,
@@ -41,7 +43,7 @@ Page({
     DB.collection("price").get(
       {
         success: function (res) {
-          console.log("price",res);
+         
           var price = res.data[0];
           if(price)
           {
@@ -61,21 +63,25 @@ Page({
       });
     
     this.setData({
-      
+      name:"",
+      phoneNum:"",
+      address: "",
       unitIndex: app.userInfoData.unit,
       buildingIndex: app.userInfoData.building,
-
+      sum: app.userInfoData.tasks ? app.userInfoData.tasks.length:0,
     });
 
+
     
-    console.log(app.userInfoData);
+    //console.log(app.userInfoData);
+
   },
 
   updatePrice()
   {
     var price = this.data.sum * (this.data.protectionChecked ? this.data.onePicProtectPrice : this.data.onePicturePrice) * this.data.copy + this.data.deliverPrice;
     this.setData({
-      value7: price
+      totalPrice: price
     });
   },
 
@@ -97,6 +103,8 @@ Page({
 
   submit()
   {
+    //if (!this.checkForm())
+    //  return;
     this.setData({
       modelVisible: true
     });
@@ -108,7 +116,55 @@ Page({
 
     if (index === 0) {
       //ok go ahead
-      
+      //console.log(app.userInfoData);
+      var fileItems = [];
+      for (var i = 0; i<app.userInfoData.tasks.length;i++)
+      {
+        fileItems.unshift(app.userInfoData.tasks[i].cloudId);
+      }
+      var order =
+      {
+        name: this.data.name,
+        items: fileItems,
+        address:
+        {
+          building: 1,
+          unit: 1,
+          city: "桂林",
+          province: "广西",
+          street: "世纪东路"
+        },
+        addressDetail: this.data.address,
+        userOpenId: app.userInfoData.openid,
+        copy: this.data.copy,
+        needProtection: this.data.protectionChecked,
+        price: this.data.totalPrice,
+        phoneNumber: this.data.phoneNum,
+        state: "待处理",
+        dateTime: new Date()
+      }
+      DB.collection("order").add({
+        data: order,
+        success:function(res)
+        {
+          wx.cloud.callFunction(
+            {
+              name:"sendmail",
+              data: order
+              
+            });
+          $Message({
+            content: '订单已提交,请耐心等待',
+            type: 'success'
+          });
+          setTimeout(function () {
+            wx.reLaunch({
+              url: '../index/index',
+            })
+          }, 2000)
+          
+        }
+      })
     } else if (index === 1) {
       //cancel
     }
@@ -118,13 +174,39 @@ Page({
     });
   },
 
-  bindBuildingPickerChange: function (i) {
-    
+  checkForm()
+  {
+    //console.log("add",this.data.address);
+    if (this.isStringEmpty(this.data.address)) {
+      $Toast({
+        content: '检查地址填写完整'
+      });
+      return false;
+    }
+    //console.log("phone num", this.data.phoneNum.length);
+    if (this.isStringEmpty(this.data.phoneNum) || this.data.phoneNum.length!=11) {
+      $Toast({
+        content: '检查电话填写是否正确'
+      });
+      return false;
+    }
+    if (this.isStringEmpty(this.data.name) )
+    {
+      $Toast({
+        content: '检查昵称填写完整'
+      });
+      return false;
+    }
+    return true;
+  },
+
+  bindBuildingPickerChange: function (i) 
+  {
     this.setData({
       buildingIndex: i.detail.value,
     })
     app.userInfoData.building = i.detail.value;
-    console.log(app.userInfoData);
+    //console.log(app.userInfoData);
     wx.setStorageSync('userInfoData', app.userInfoData);
   },
 
@@ -136,6 +218,45 @@ Page({
     app.userInfoData.unit = i.detail.value;
     wx.setStorageSync('userInfoData', app.userInfoData);
   },
+
+  isStringEmpty(obj)
+  {
+    if (typeof obj == "undefined" || obj == null || obj == "") {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  addressChanged({detail})
+  {
+    
+    this.setData(
+      {
+        address:detail.detail.value
+      });
+  },
+  phoneNumberChanged({ detail }) {
+    
+    this.setData(
+      {
+        phoneNum: detail.detail.value
+      });
+  },
+  nickNameChanged({ detail }) {
+    
+    this.setData(
+      {
+        name: detail.detail.value
+      });
+  },
+  commentChanged({ detail }) {
+
+    this.setData(
+      {
+        comment: detail.detail.value
+      });
+  }
 })
 
 

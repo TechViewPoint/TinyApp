@@ -9,7 +9,7 @@
     "i-alert": "/lib/iview/alert/index",
     "i-panel": "/lib/iview/panel/index",
     "i-card":"/lib/iview/card/index",
-    "i-modal": "/lib/iview/modal/index"
-    
+    "i-modal": "/lib/iview/modal/index",
+    "i-action-sheet": "/lib/iview/action-sheet/index"
   }
 }

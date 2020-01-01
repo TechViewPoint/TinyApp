@@ -1,14 +1,12 @@
 <!--pages/orderlist/orderList.wxml-->
-<view class="container" scroll-x="false">
 <i-cell-group wx:if="{{orders.length}}">
-        <i-cell wx:for="{{orders}}" wx:key="userOpenId"  wx:for-item="order">
+        <i-cell bind:click="actionsTap" wx:for="{{orders}}" wx:key="userOpenId"  wx:for-item="order">
+           <i-card title="{{order.description}}" extra="{{order.state}}" >
+    <view slot="content">{{order.addressDetail}}</view>
+    <wxs module="filter" src="../../utils/filter.wxs"></wxs>
+    <view slot="footer">订单日期：{{order.dateTimeStr}}</view>
+</i-card>
            
-            <text class="breakword">{{order.userName}}</text>
-
-            <view class="flex justify-end">
-                <text>{{order.state}}</text>
-            </view>
-          <text>-------------------------</text>
         </i-cell>
     </i-cell-group>
     <view class="flex justify-center align-center" style="height: 300px" wx:else>
@@ -16,4 +14,5 @@
 			没有任何订单
 		</text>
  </view>
- </view>
+
+ 
