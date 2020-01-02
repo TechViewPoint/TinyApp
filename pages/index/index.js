@@ -14,12 +14,12 @@ Page({
 
   bindPrintPictureTap: function () {
     wx.navigateTo({
-      url: '../upload/upload'
+      url: '../imageUpload/imageUpload'
     })
   },
   bindPrintDocTap: function () {
     wx.navigateTo({
-      url: '../upload/upload'
+      url: '../imageUpload/imageUpload'
     })
   },
 

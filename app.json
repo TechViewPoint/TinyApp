@@ -1,12 +1,15 @@
 {
   "pages": [
+    "pages/index/index",
+    "pages/info/info",
     "pages/imageUpload/imageUpload",
     "pages/upload/upload",
-    
+    "pages/orderSubmitSuccess/orderSubmitSuccess",
+    "pages/orderSubmitFail/orderSubmitFail",
     "testPage/test",
-    "pages/index/index",
+    
     "pages/orderList/orderList",
-    "pages/info/info",
+    
     "pages/logs/logs"
     
     

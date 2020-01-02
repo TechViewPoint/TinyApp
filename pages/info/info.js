@@ -63,9 +63,9 @@ Page({
       });
     
     this.setData({
-      name:"",
-      phoneNum:"",
-      address: "",
+      name: that.app.userInfoData.name ? that.app.userInfoData.name:"",
+      phoneNum: that.app.userInfoData.phoneNum ? that.app.userInfoData.phoneNum:"",
+      address: that.app.userInfoData.address ? that.app.userInfoData.address:"",
       unitIndex: app.userInfoData.unit,
       buildingIndex: app.userInfoData.building,
       sum: app.userInfoData.tasks ? app.userInfoData.tasks.length:0,
@@ -103,8 +103,8 @@ Page({
 
   submit()
   {
-    //if (!this.checkForm())
-    //  return;
+    if (!this.checkForm())
+      return;
     this.setData({
       modelVisible: true
     });
@@ -117,6 +117,14 @@ Page({
     if (index === 0) {
       //ok go ahead
       //console.log(app.userInfoData);
+
+      //save userinfo to local
+      app.userInfoData.name = this.data.name;
+      app.userInfoData.address = this.data.address;
+      app.userInfoData.phoneNum = this.data.phoneNum;
+      wx.setStorageSync('userInfoData', app.userInfoData);
+
+      //add order
       var fileItems = [];
       for (var i = 0; i<app.userInfoData.tasks.length;i++)
       {
@@ -147,22 +155,24 @@ Page({
         data: order,
         success:function(res)
         {
+          //send email for notification
           wx.cloud.callFunction(
             {
               name:"sendmail",
               data: order
+            }).then(res => {
+              wx.reLaunch({
+                url: '../orderSubmitSuccess/orderSubmitSuccess',
+              })
+            }).catch(err => {
               
             });
-          $Message({
-            content: '订单已提交,请耐心等待',
-            type: 'success'
-          });
-          setTimeout(function () {
-            wx.reLaunch({
-              url: '../index/index',
-            })
-          }, 2000)
-          
+        },
+        fail:function(res)
+        {
+          wx.reLaunch({
+            url: '../orderSubmitFail/orderSubmitFail',
+          })
         }
       })
     } else if (index === 1) {

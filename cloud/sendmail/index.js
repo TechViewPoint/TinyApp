@@ -1,7 +1,7 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init("royhuang")
+cloud.init()
 const nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
   service: 'qq',
@@ -26,9 +26,8 @@ exports.main = async (event, context) => {
   mailOptions.subject="test";
   console.log("event", event);
   console.log("info", event.order.addressDetail);
-  mailOptions.text = event.order.addressDetail;
+  mailOptions.text = "订单来了"+event.order.addressDetail;
   const info = await transporter.sendMail(mailOptions);
   console.log('Message sent: ' + info.response);
   return info
-  
 }

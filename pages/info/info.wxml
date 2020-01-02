@@ -1,36 +1,42 @@
 <i-panel>
-    <i-notice-bar icon="systemprompt" closable loop speed="1000">
-        价格说明：照片打印统一6寸,0.5元/张,塑封照片1元/张
-    </i-notice-bar>
+  <i-notice-bar icon="systemprompt" closable loop speed="1000">
+    价格说明：照片打印统一6寸,0.5元/张,塑封照片1元/张
+  </i-notice-bar>
 </i-panel>
-<i-panel title="配送信息">
-    <i-input value="{{name}}" bind:change="nickNameChanged" title="收货人" placeholder="收货人" />
-    
-    <i-input value="{{phoneNum}}" bind:change="phoneNumberChanged" type="number" title="联系电话" placeholder="请输入手机号" />
- 
-      <i-input value="{{address}}" bind:change="addressChanged" type="textarea" title="详细地址" placeholder="输入收获地址" maxlength="50" />
 
-    <i-input value="{{comment}}" bind:change="commentChanged" title="备注" placeholder="备注信息"/>
+<i-panel title="配送信息">
+  <i-input value="{{name}}" bind:change="nickNameChanged" title="收货人" placeholder="收货人" />
+
+  <i-input value="{{phoneNum}}" bind:change="phoneNumberChanged" type="number" title="联系电话" placeholder="请输入手机号" />
+
+  <i-input value="{{address}}" bind:change="addressChanged" type="textarea" title="详细地址" placeholder="输入收获地址" maxlength="50" />
+
+  <i-input value="{{comment}}" bind:change="commentChanged" title="备注" placeholder="备注信息" />
 </i-panel>
 
 <i-panel title="打印设置">
-     <i-radio value="是否塑封" disabled="{{disable}}" checked="{{protectionChecked}}" bindchange="handleProtectionChange" position="right">
-    </i-radio>
-    <i-cell-group >
+  <i-radio value="是否塑封" disabled="{{disable}}" checked="{{protectionChecked}}" bindchange="handleProtectionChange" position="right">
+  </i-radio>
+  <i-cell-group>
     <i-cell title="数量">
-        <i-input-number value="{{ copy }}" min="1" max="100" bindchange="handleCopyChange" slot="footer"/>
+      <i-input-number value="{{ copy }}" min="1" max="100" bindchange="handleCopyChange" slot="footer" />
     </i-cell>
-    </i-cell-group>
+  </i-cell-group>
 </i-panel>
 
-<i-panel title="消费总额" >
-    
-    <i-input value="{{ totalPrice }}" type="number" right error title="人民币" mode="wrapped" placeholder="0" disabled/>
+<i-panel title="消费总额">
+
+  <i-input value="{{ totalPrice }}" type="number" right error title="人民币" mode="wrapped" placeholder="0" disabled/>
 </i-panel>
-<i-button bind:click="submit" type="success" shape="circle">提交订单</i-button>
+
+
+<!--<i-button bind:click="submit" type="success">提交订单</i-button>-->
+<view class="page__ft">
+<button class="weui-btn" bindtap="submit" type="primary">提交订单</button>
+</view>
 
 <i-modal title="提交订单" visible="{{ modelVisible }}" actions="{{ submitActions }}" bind:click="handleSubmitClick">
-    <view>注意:提交后不能修改</view>
+  <view>注意:提交后不能修改</view>
 </i-modal>
 <i-message id="message" />
 <i-toast id="toast" />
