@@ -1,0 +1,12 @@
+<!--testPage/test.wxml-->
+<i-cell-group>
+  <i-cell wx:for="{{cells}}" wx:key="item">
+  <i-card class="flex align-center">
+  </i-card>
+  </i-cell>
+</i-cell-group>
+
+<view class="align-bottom">
+<i-button type="primary"></i-button>
+</view>
+

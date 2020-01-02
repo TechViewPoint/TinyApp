@@ -11,16 +11,19 @@ App({
     {
       env: "royhuang-v6urk"
     }
-    wx.cloud.callFunction(
-      {
-        name: "getOpenId",
-        success(res)
+    if (!this.userInfoData.openid)
+    {
+      wx.cloud.callFunction(
         {
-          that.userInfoData.openid = res.result.openid;
-          console.log("getOpenid Ok", that.userInfoData.openid);
-          wx.setStorageSync('userInfoData', that.userInfoData);
-        },
-      })
+          name: "getOpenId",
+          success(res) {
+            that.userInfoData.openid = res.result.openid;
+            console.log("getOpenid Ok", that.userInfoData.openid);
+            wx.setStorageSync('userInfoData', that.userInfoData);
+          },
+        })
+    }
+    
     
 
     /*
