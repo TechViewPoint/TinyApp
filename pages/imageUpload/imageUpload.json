@@ -1,0 +1,15 @@
+{
+  "usingComponents": 
+  {
+    "i-button": "/lib/iview/button/index",
+    "i-cell-group": "/lib/iview/cell-group/index",
+    "i-cell": "/lib/iview/cell/index",
+    "i-progress": "/lib/iview/progress/index",
+    "i-spin": "/lib/iview/spin/index",
+    "i-alert": "/lib/iview/alert/index",
+    "i-panel": "/lib/iview/panel/index",
+    "i-card": "/lib/iview/card/index",
+    "i-modal": "/lib/iview/modal/index",
+    "i-action-sheet": "/lib/iview/action-sheet/index"
+  }
+}

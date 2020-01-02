@@ -10,29 +10,59 @@ function t(t, e, a) {
 
 var e = getApp();
 
+
 Page({
-  data: {
-    UPLOADING: "UPLOADING",
-    PROCESSING: "PROCESSING",
-    FINISHED: "FINISHED",
-    ERROR: "ERROR",
-    cookie: "",
-    tasks: [],
-    actions:[
+  
+    data: {
+      files:[],
+      UPLOADING: "UPLOADING",
+      PROCESSING: "PROCESSING",
+      FINISHED: "FINISHED",
+      ERROR: "ERROR",
+      cookie: "",
+      tasks: [],
+      actions: [
         {
           name: '从相册获取',
-          
+
           icon: 'picture'
         },
         {
           name: '从聊天记录获取',
-          
+
           icon: 'interactive'
-        }       
-    ],
-    modelVisible:false
+        }
+      ],
+      modelVisible: false
+    
   },
-  handlers: new Map(),
+  chooseImage: function (e) {
+    var that = this;
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        that.setData({
+          files: that.data.files.concat(res.tempFilePaths)
+        });
+      }
+    })
+  },
+  previewImage: function (e) {
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.tasks.map(function (t) {
+        return t.filePath;
+      })
+    })
+  },
+
+
+
+  /*--------add----------*/
+
+handlers: new Map(),
   onLoad: function (t) {
     //this.setData({
     //  cookie: decodeURIComponent(t.cookie)
@@ -62,15 +92,15 @@ Page({
     wx.chooseMessageFile({
       count: 9,
       type: 'image',
-      extension: ["jpg","png","jpeg"],
+      extension: ["jpg", "png", "jpeg"],
       success: function (e) {
         console.log("eeeed", e);
         var a = new Set(e.tempFiles.map(function (t) {
-          
+
           return t.path.split('/').pop();
         }));
         if (t.data.tasks.filter(function (t) {
-          console.log("name in task",t.name);
+          console.log("name in task", t.name);
           return a.has(t.name);
         }).length) wx.showModal({
           content: "不可重复上传文件名相同的文件，如果此文件之前上传失败，请先从列表中将其关闭",
@@ -101,7 +131,7 @@ Page({
     });
   },
 
-  chooseImages:function(){
+  chooseImages: function () {
     var t = this, e = arguments.length > 0 && void 0 !== arguments[0] && arguments[0];
     wx.chooseImage({
       count: 9,
@@ -154,7 +184,7 @@ Page({
       return t.name == e.name;
     })) {
       var a = "tasks[" + this.data.tasks.indexOf(e) + "]";
-      
+
       this.setData(t({}, a, e));
     }
   },
@@ -180,39 +210,39 @@ Page({
 
   sethandler: function (t, a) {
     //console.log(a.path.split('/').pop())
-    
+
     var n = this,
-    s = wx.cloud.uploadFile({
-      cloudPath: a.path.split('.').pop(),
-      filePath: a.path,
-      success: function (e) {
-        
-        console.log("back info ", e);
-        t.cloudId = e.fileID;
-        //t.resp = JSON.parse(e.data);
-        t.state = (200 == e.statusCode ? "FINISHED" : "ERROR");
-        n.update(t);
-      },
-      fail: function () {
-        t.state = "ERROR", t.resp = "网络错误，请在稳定的网络环境下重试", n.update(t);
-      }
-    });
+      s = wx.cloud.uploadFile({
+        cloudPath: a.path.split('.').pop(),
+        filePath: a.path,
+        success: function (e) {
+
+          console.log("back info ", e);
+          t.cloudId = e.fileID;
+          //t.resp = JSON.parse(e.data);
+          t.state = (200 == e.statusCode ? "FINISHED" : "ERROR");
+          n.update(t);
+        },
+        fail: function () {
+          t.state = "ERROR", t.resp = "网络错误，请在稳定的网络环境下重试", n.update(t);
+        }
+      });
 
     return this.handlers.set(a.name, s), s;
   },
 
   upload: function (t) {
-    console.log("fileinfo",t);
+    console.log("fileinfo", t);
     var e = this,
-    
-    a = {
-      name: t.name?t.name:t.path.split('/').pop(),
-      state: "UPLOADING",
-      progress: 0,
-      filePath:t.path,
-      cloudId:'',
-    };
-    
+
+      a = {
+        name: t.name ? t.name : t.path.split('/').pop(),
+        state: "UPLOADING",
+        progress: 0,
+        filePath: t.path,
+        cloudId: '',
+      };
+
     t.size > 10485760 ? (a.state = "ERROR", a.resp = "文件大小不能超过10MB") : this.sethandler(a, t).onProgressUpdate(function (t) {
       a.progress = t.progress, 100 == a.progress && (a.state = "PROCESSING"), e.update(a);
     }), this.data.tasks.push(a), this.setData({
@@ -221,7 +251,7 @@ Page({
   },
 
   nextstep: function () {
-    console.log("task",this.tasks);
+    console.log("task", this.tasks);
     var that = this;
     if (this.data.tasks.length == 0) {
       //if you dont choose any item it will not go on.
@@ -260,12 +290,10 @@ Page({
   handleClickChooseFileBtn({ detail }) {
     const index = detail.index;
 
-    if (index === 0) 
-    {
+    if (index === 0) {
       this.chooseImages();
-    } 
-    else if (index === 1) 
-    {
+    }
+    else if (index === 1) {
       this.choose();
     }
     this.setData({
@@ -273,11 +301,11 @@ Page({
     });
   },
 
-  closeActionSheet()
-  {
+  closeActionSheet() {
     this.setData({
       modelVisible: false
     });
   }
 
+  /*----------------end-----------------*/
 });

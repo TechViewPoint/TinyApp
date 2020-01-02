@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/imageUpload/imageUpload",
     "pages/upload/upload",
+    
     "testPage/test",
     "pages/index/index",
     "pages/orderList/orderList",
