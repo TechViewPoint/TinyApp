@@ -1,11 +1,12 @@
 {
   "pages": [
+    "pages/upload/upload",
     "testPage/test",
     "pages/index/index",
     "pages/orderList/orderList",
     "pages/info/info",
-    "pages/logs/logs",
-    "pages/upload/upload"
+    "pages/logs/logs"
+    
     
   ],
   "window": {

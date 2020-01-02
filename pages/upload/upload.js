@@ -64,10 +64,13 @@ Page({
       type: 'image',
       extension: ["jpg","png","jpeg"],
       success: function (e) {
+        console.log("eeeed", e);
         var a = new Set(e.tempFiles.map(function (t) {
+          
           return t.name;
         }));
         if (t.data.tasks.filter(function (t) {
+          console.log("name in task",t.name);
           return a.has(t.name);
         }).length) wx.showModal({
           content: "不可重复上传文件名相同的文件，如果此文件之前上传失败，请先从列表中将其关闭",
@@ -102,9 +105,10 @@ Page({
     var t = this, e = arguments.length > 0 && void 0 !== arguments[0] && arguments[0];
     wx.chooseImage({
       count: 1,
-
+      type: 'image',
       extension: ["jpg", "png", "jpeg"],
       success: function (e) {
+        console.log("eeee",e);
         var a = new Set(e.tempFiles.map(function (t) {
           return t.name;
         }));

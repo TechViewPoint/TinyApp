@@ -1,1 +1,6 @@
 /* pages/upload/upload.wxss */
+.itemBox
+{
+  margin: 5px; padding: 0 10px; text-align: center; background:  cornsilk;
+  height: 3em;line-height: 2.3em;color: gray;
+}
