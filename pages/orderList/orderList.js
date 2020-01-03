@@ -6,7 +6,7 @@ Page({
 
   data: {
     orders: [],
-    
+    WAITING:"待处理"
   },
 
   onLoad: function (options) {
@@ -22,11 +22,11 @@ Page({
         userOpenId: app.userInfoData.openid
       }).get({
         success: function (res) {
-
+          console.log(res);
           //handleData(res.data);
           for (var i = 0; i < res.data.length;i++)
           {
-            res.data[i].dateTimeStr = that.dateToString(res.data[i].dateTime);
+            res.data[i].dateTimeStr = that.timestamp2String(res.data[i].dateTime);
             res.data[i].description = res.data[i].items.length.toString()+"个项目";
           }
           that.setData(
@@ -90,6 +90,28 @@ Page({
   actionsTap({detail})
   {
     console.log(detail);
+  },
+
+  timestamp2String(timestamp)
+  {
+    var date = new Date(timestamp);
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString();
+    var day = (date.getDate()).toString();
+    var hours = (date.getHours()).toString();
+    var mins = (date.getMinutes()).toString();
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+    if (mins.length == 1)
+    {
+      mins = "0" + mins;
+    }
+    var dateTime = year + "-" + month + "-" + day + " " + hours+":"+mins;
+    return dateTime;
   },
   dateToString: function (date) {
     var year = date.getFullYear();

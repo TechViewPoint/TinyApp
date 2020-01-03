@@ -1,2 +1,29 @@
-<!--pages/about/about.wxml-->
-<text>pages/about/about.wxml</text>
+<view class="page">
+    
+    <view class="page__bd">
+        <view class="weui-article">
+            <view class="weui-article__h1">自打印app</view>
+            <view class="weui-article__section">
+                <view class="weui-article__h2">您的生活好帮手</view>
+                <view class="weui-article__section">
+                    
+                    <view class="weui-article__p">
+                       如果您在使用过程中遇到任何问题，或者有什么好的建议/意见，可以通过扫下面的二维码联系我们.
+                    </view>
+                    <view class="weui-article__p">
+                        <image class="weui-article__img" src="../../images/qrcode.png" mode="aspectFit" style="height: 180px" />
+                    
+                    </view>
+                </view>
+                
+               
+            </view>
+        </view>
+    </view>
+    <view class="weui-footer weui-footer_fixed-bottom">
+            <view class="weui-footer__links">
+                <navigator url="../../index/index" class="weui-footer__link">自打印</navigator>
+            </view>
+            <view class="weui-footer__text">Copyright © 2020 Roy Huang</view>
+        </view>
+</view>

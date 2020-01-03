@@ -9,10 +9,11 @@ Page({
         icon:"picture_fill",
         index:0,
       },
+      
       {
         name: '打印文档',
         icon: "document",
-         index: 1,
+        index:1,
       },
       {
         name: '我的订单',
@@ -20,8 +21,9 @@ Page({
         index: 2,
 
       },
+      /*
       {
-        name: '租房信息',
+        name: '在线商城',
         icon: "homepage",
         index: 3,
       },
@@ -43,10 +45,10 @@ Page({
           
       },
       {
-        name: '留言板',
+        name: 'PS修图',
         icon: "interactive",
         index: 7,
-      },
+      },*/
       {
         name: '关于',
         icon: "feedback",
@@ -61,17 +63,15 @@ Page({
   },
   gridTapHandle:function(t)
   {
-    console.log("grid tap",t);
+    //console.log("grid tap",t);
     var index = t.currentTarget.dataset.task.index;
-    
-      
       if (index == 0)
       {
-        console.log("start");
+        //console.log("start");
         wx.navigateTo({
           url: '../imageUpload/imageUpload'
         });
-        console.log("end")
+        //console.log("end")
       }
       else if (index == 1)
       {
@@ -108,7 +108,9 @@ Page({
         });
       }
       else if (index == 8) {
-
+        wx.navigateTo({
+          url: '../about/about'
+        });
       }
     
   },
@@ -152,7 +154,7 @@ Page({
     }
   },
   getUserInfo: function(e) {
-    console.log(e)
+    //console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,

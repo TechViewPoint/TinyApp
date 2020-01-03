@@ -1,8 +1,9 @@
-<!--pages/orderlist/orderList.wxml-->
+
 <i-cell-group wx:if="{{orders.length}}">
         <i-cell bind:click="actionsTap" wx:for="{{orders}}" wx:key="userOpenId"  wx:for-item="order">
            <i-card title="{{order.description}}" extra="{{order.state}}" >
-    <view slot="content">{{order.addressDetail}}</view>
+    <view slot="content">{{order.responseMsg}}</view>
+    
     <wxs module="filter" src="../../utils/filter.wxs"></wxs>
     <view slot="footer">订单日期：{{order.dateTimeStr}}</view>
 </i-card>

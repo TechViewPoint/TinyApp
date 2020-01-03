@@ -107,8 +107,8 @@ Page({
 
   submit()
   {
-    //if (!this.checkForm())
-    //  return;
+    if (!this.checkForm())
+      return;
     this.setData({
       modelVisible: true
     });

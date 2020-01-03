@@ -18,7 +18,7 @@ App({
           name: "getOpenId",
           success(res) {
             that.userInfoData.openid = res.result.openid;
-            console.log("getOpenid Ok", that.userInfoData.openid);
+            //console.log("getOpenid Ok", that.userInfoData.openid);
             wx.setStorageSync('userInfoData', that.userInfoData);
           },
         })

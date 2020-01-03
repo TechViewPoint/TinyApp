@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "自打印",
   "usingComponents": 
   {
     "i-button": "/lib/iview/button/index",

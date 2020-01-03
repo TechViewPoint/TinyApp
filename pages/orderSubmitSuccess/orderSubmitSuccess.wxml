@@ -4,8 +4,8 @@
             <icon type="success" size="64"></icon>
         </view>
         <view class="weui-msg__text-area">
-            <view class="weui-msg__title">操作成功</view>
-            <view class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<navigator url="" class="weui-msg__link">文字链接</navigator></view>
+            <view class="weui-msg__title">提交成功</view>
+            <view class="weui-msg__desc"></view>
         </view>
         <view class="weui-msg__opr-area">
             <view class="weui-btn-area">
@@ -13,14 +13,14 @@
             </view>
         </view>
         <view class="weui-msg__tips-area">
-            <view class="weui-msg__tips">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<navigator url="" class="weui-msg__link">文字链接</navigator></view>
+            <view class="weui-msg__tips">提交后我们会加紧处理,尽快送到您的手中，同时感谢您一直以来的支持.</view>
         </view>
         <view class="weui-msg__extra-area">
             <view class="weui-footer">
                 <view class="weui-footer__links">
-                    <navigator url="" class="weui-footer__link">底部链接文本</navigator>
+                    <navigator url="" class="weui-footer__link">自打印</navigator>
                 </view>
-                <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+                <view class="weui-footer__text">Copyright © 2020 Roy Huang</view>
             </view>
         </view>
     </view>

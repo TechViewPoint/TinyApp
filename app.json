@@ -1,12 +1,16 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/info/info",
+    "pages/orderSubmitFail/orderSubmitFail",
+    "pages/orderSubmitSuccess/orderSubmitSuccess",
+    
     "pages/about/about",
+    
+    "pages/info/info",
     "pages/imageUpload/imageUpload",
     "pages/upload/upload",
-    "pages/orderSubmitSuccess/orderSubmitSuccess",
-    "pages/orderSubmitFail/orderSubmitFail",
+    
+    
     "testPage/test",
     "pages/orderList/orderList",
     "pages/logs/logs"
@@ -14,7 +18,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FAFAFA",
-    "navigationBarTitleText": "花园帮",
+    "navigationBarTitleText": "自打印",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f9f9f9"
   },

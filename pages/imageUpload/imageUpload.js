@@ -94,13 +94,13 @@ handlers: new Map(),
       type: 'image',
       extension: ["jpg", "png", "jpeg"],
       success: function (e) {
-        console.log("eeeed", e);
+        //console.log("eeeed", e);
         var a = new Set(e.tempFiles.map(function (t) {
 
           return t.path.split('/').pop();
         }));
         if (t.data.tasks.filter(function (t) {
-          console.log("name in task", t.name);
+          //console.log("name in task", t.name);
           return a.has(t.name);
         }).length) wx.showModal({
           content: "不可重复上传文件名相同的文件，如果此文件之前上传失败，请先从列表中将其关闭",
@@ -213,11 +213,11 @@ handlers: new Map(),
 
     var n = this,
       s = wx.cloud.uploadFile({
-        cloudPath: a.path.split('.').pop(),
+        cloudPath:Date.parse(new Date())+ Math.ceil(Math.random() * 1000).toString()+'.'+a.path.split('.').pop(),
         filePath: a.path,
         success: function (e) {
 
-          console.log("back info ", e);
+          //console.log("back info ", e);
           t.cloudId = e.fileID;
           //t.resp = JSON.parse(e.data);
           t.state = (200 == e.statusCode ? "FINISHED" : "ERROR");
@@ -232,7 +232,7 @@ handlers: new Map(),
   },
 
   upload: function (t) {
-    console.log("fileinfo", t);
+    //console.log("fileinfo", t);
     var e = this,
 
       a = {
@@ -251,7 +251,7 @@ handlers: new Map(),
   },
 
   nextstep: function () {
-    console.log("task", this.tasks);
+    //console.log("task", this.tasks);
     var that = this;
     if (this.data.tasks.length == 0) {
       //if you dont choose any item it will not go on.
@@ -264,7 +264,7 @@ handlers: new Map(),
     var t = function () {
       //save task info to userInfoData in app.js
       e.userInfoData.tasks = that.data.tasks;
-      console.log("dada", e.userInfoData.tasks);
+      //console.log("dada", e.userInfoData.tasks);
       wx.navigateTo({
         url: "/pages/info/info"
       })
