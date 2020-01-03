@@ -2,22 +2,19 @@
   "pages": [
     "pages/index/index",
     "pages/info/info",
+    "pages/about/about",
     "pages/imageUpload/imageUpload",
     "pages/upload/upload",
     "pages/orderSubmitSuccess/orderSubmitSuccess",
     "pages/orderSubmitFail/orderSubmitFail",
     "testPage/test",
-    
     "pages/orderList/orderList",
-    
     "pages/logs/logs"
-    
-    
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FAFAFA",
-    "navigationBarTitleText": "自打印",
+    "navigationBarTitleText": "花园帮",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f9f9f9"
   },

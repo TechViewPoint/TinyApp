@@ -1,7 +1,31 @@
 <view class="page">
   <view class="page__hd">
-    <view class="page__title">Uploader</view>
-    <view class="page__desc">上传组件</view>
+     <i-steps>
+        <i-step status="finish">
+            <view slot="title">
+                  主页
+            </view>
+            <view slot="content">
+                
+            </view>
+        </i-step>
+        <i-step status="process">
+            <view slot="title">
+                上传照片
+            </view>
+            <view slot="content">
+                
+            </view>
+        </i-step>
+        <i-step status="">
+            <view slot="title">
+                提交
+            </view>
+            <view slot="content">
+                
+            </view>
+        </i-step>
+    </i-steps>
   </view>
   <view class="page__bd">
     <view class="weui-cells">
@@ -14,7 +38,7 @@
                 <view class="weui-uploader__info">{{tasks.length}}/100</view>
               </view>
               <view class="weui-uploader__tips">
-                上传提示
+                上传照片小于10M
               </view>
             </view>
             <view class="weui-uploader__bd">

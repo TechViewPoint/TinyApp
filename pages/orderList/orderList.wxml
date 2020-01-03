@@ -9,7 +9,7 @@
            
         </i-cell>
     </i-cell-group>
-    <view class="flex justify-center align-center" style="height: 300px" wx:else>
+    <view class="page__ft" style="height: 300px" wx:else>
         <text>
 			没有任何订单
 		</text>

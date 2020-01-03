@@ -4,6 +4,10 @@ const cloud = require('wx-server-sdk')
 cloud.init({
   env: "royhuang-v6urk"
 })
+
+const db = cloud.database()
+const _ = db.command
+
 const nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
   service: 'qq',
@@ -21,15 +25,32 @@ var mailOptions = {
   subject: '测试云函数',      // 标题
   text: '测试云函数'
 };
-// 云函数入口函数
+
 exports.main = async (event, context) => {
-  console.log("Start to sendemail")
-  //开始发送邮件
-  mailOptions.subject="test";
-  console.log("event", event);
-  console.log("info", event.order.addressDetail);
-  mailOptions.text = "订单来了"+event.order.addressDetail;
+  // handle user order
+  console.log("cloud fun", event);
+   var databaseRes = await db.collection('order').add({
+    data: {
+      name: event.name,
+      items: event.items,
+      address: event.address,
+      addressDetail: event.addressDetail,
+      userOpenId: event.userOpenId,
+      copy: event.copy,
+      needProtection: event.needProtection,
+      state: event.state,
+      dateTime: event.dateTime,
+      responseMsg: event.responseMsg,
+      price: event.price
+    },
+    success: function (res) {
+
+    },
+    fail: function (res) {
+
+    }
+  })
+  mailOptions.text = JSON.stringify(event);
   const info = await transporter.sendMail(mailOptions);
-  console.log('Message sent: ' + info.response);
-  return info
+  return [databaseRes,info];
 }

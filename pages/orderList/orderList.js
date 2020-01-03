@@ -31,7 +31,7 @@ Page({
           }
           that.setData(
             {
-              orders: res.data
+              orders: res.data.reverse()
             });
         },
         fail(res) {

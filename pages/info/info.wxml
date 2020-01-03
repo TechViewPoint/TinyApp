@@ -1,3 +1,4 @@
+
 <i-panel>
   <i-notice-bar icon="systemprompt" closable loop speed="1000">
     价格说明：照片打印统一6寸,0.5元/张,塑封照片1元/张
@@ -24,15 +25,43 @@
   </i-cell-group>
 </i-panel>
 
-<i-panel title="消费总额">
-
-  <i-input value="{{ totalPrice }}" type="number" right error title="人民币" mode="wrapped" placeholder="0" disabled/>
+<i-panel title="订单信息">
 </i-panel>
+
+ <view class="page__bd">
+        <view class="weui-form-preview">
+            <view class="weui-form-preview__hd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">消费总额(含配送费)</view>
+                    <view class="weui-form-preview__value_in-hd">¥{{totalPrice}}</view>
+                </view>
+            </view>
+            <view class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">商品</view>
+                    <view class="weui-form-preview__value">{{orderName}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">配送费</view>
+                    <view class="weui-form-preview__value">¥{{deliverPrice}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">备注</view>
+                    <view class="weui-form-preview__value">{{comment}}</view>
+                </view>
+            </view>
+            <view class="weui-form-preview__ft">
+              
+            </view>
+        </view>
+        </view>
 
 
 <!--<i-button bind:click="submit" type="success">提交订单</i-button>-->
 <view class="page__ft">
-<button class="weui-btn" bindtap="submit" type="primary">提交订单</button>
+<button class="weui-btn" loading="{{isBusy}}" bindtap="submit" type="primary">提交订单</button>
+
+<!--<i-button type="primary" bind:click="submit" loading="{{isBusy}}">提交订单</i-button>-->
 </view>
 
 <i-modal title="提交订单" visible="{{ modelVisible }}" actions="{{ submitActions }}" bind:click="handleSubmitClick">

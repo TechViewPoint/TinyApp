@@ -10,6 +10,8 @@
     "i-panel": "/lib/iview/panel/index",
     "i-card": "/lib/iview/card/index",
     "i-modal": "/lib/iview/modal/index",
-    "i-action-sheet": "/lib/iview/action-sheet/index"
+    "i-action-sheet": "/lib/iview/action-sheet/index",
+    "i-steps": "/lib/iview/steps/index",
+    "i-step": "/lib/iview/step/index"
   }
 }

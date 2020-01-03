@@ -1,17 +1,117 @@
-//index.js
-//获取应用实例
+const { $Toast } = require('../../lib/iview/base/index');
 const app = getApp()
 const DB = wx.cloud.database()
 Page({
   data: {
-    motto: 'Hello World',
+    functions: [
+      {
+        name:'打印照片',
+        icon:"picture_fill",
+        index:0,
+      },
+      {
+        name: '打印文档',
+        icon: "document",
+         index: 1,
+      },
+      {
+        name: '我的订单',
+        icon: "task",
+        index: 2,
+
+      },
+      {
+        name: '租房信息',
+        icon: "homepage",
+        index: 3,
+      },
+      {
+        name: '文体活动',
+        icon: "flashlight",
+        index: 4,
+      },
+      
+      {
+        name: '家教辅导',
+        icon: "brush",
+         index: 5,
+      },
+      {
+        name: '二手出售',
+        icon: "commodity",
+        index: 6,
+          
+      },
+      {
+        name: '留言板',
+        icon: "interactive",
+        index: 7,
+      },
+      {
+        name: '关于',
+        icon: "feedback",
+        index: 8,
+
+      },],
     printPicture:'打印照片',
     printDoc: '打印文档',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
+  gridTapHandle:function(t)
+  {
+    console.log("grid tap",t);
+    var index = t.currentTarget.dataset.task.index;
+    
+      
+      if (index == 0)
+      {
+        console.log("start");
+        wx.navigateTo({
+          url: '../imageUpload/imageUpload'
+        });
+        console.log("end")
+      }
+      else if (index == 1)
+      {
+        $Toast({
+          content: '该功能暂未开通'
+        });
+      }
+      else if (index == 2) {
+        this.lookupOrder();
+      }
+      else if (index == 3) {
+        $Toast({
+          content: '该功能暂未开通'
+        });
+      }
+      else if (index == 4) {
+        $Toast({
+          content: '该功能暂未开通'
+        });
+      }
+      else if (index == 5) {
+        $Toast({
+          content: '该功能暂未开通'
+        });
+      }
+      else if (index == 6) {
+        $Toast({
+          content: '该功能暂未开通'
+        });
+      }
+      else if (index ==7) {
+        $Toast({
+          content: '该功能暂未开通'
+        });
+      }
+      else if (index == 8) {
 
+      }
+    
+  },
   bindPrintPictureTap: function () {
     wx.navigateTo({
       url: '../imageUpload/imageUpload'

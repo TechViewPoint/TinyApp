@@ -6,6 +6,7 @@ const DB = wx.cloud.database()
 Page({
   modelVisible:false,
   data: {
+    isBusy:false,
     submitActions: [
       {
         name: '确认无误',
@@ -21,6 +22,7 @@ Page({
     unitArray: ['1单元', '2单元', '3单元', '4单元'],
     buildingIndex: 0,
     unitIndex: 0,
+    orderName:'',
     name: '',
     phoneNum: '',
     address: '',
@@ -63,9 +65,10 @@ Page({
       });
     
     this.setData({
-      name: that.app.userInfoData.name ? that.app.userInfoData.name:"",
-      phoneNum: that.app.userInfoData.phoneNum ? that.app.userInfoData.phoneNum:"",
-      address: that.app.userInfoData.address ? that.app.userInfoData.address:"",
+      orderName:"6寸照片打印",
+      name: app.userInfoData.name ? app.userInfoData.name:"",
+      phoneNum: app.userInfoData.phoneNum ? app.userInfoData.phoneNum:"",
+      address: app.userInfoData.address ? app.userInfoData.address:"",
       unitIndex: app.userInfoData.unit,
       buildingIndex: app.userInfoData.building,
       sum: app.userInfoData.tasks ? app.userInfoData.tasks.length:0,
@@ -93,7 +96,8 @@ Page({
     this.updatePrice();
   },
 
-  handleProtectionChange({ detail = {} }) {
+  handleProtectionChange({ detail = {} }) 
+  {
     this.setData({
       protectionChecked: detail.current
     });
@@ -103,8 +107,8 @@ Page({
 
   submit()
   {
-    if (!this.checkForm())
-      return;
+    //if (!this.checkForm())
+    //  return;
     this.setData({
       modelVisible: true
     });
@@ -112,6 +116,8 @@ Page({
 
   handleSubmitClick({ detail})
   {
+    if(this.data.isBusy)
+    return;
     const index = detail.index;
 
     if (index === 0) {
@@ -149,8 +155,39 @@ Page({
         price: this.data.totalPrice,
         phoneNumber: this.data.phoneNum,
         state: "待处理",
-        dateTime: new Date()
+        dateTime: Date.parse(new Date()),
+        responseMsg:[]
       }
+      this.setData(
+        {
+          isBusy:true
+        });
+      var that = this;
+      wx.cloud.callFunction(
+        {
+          name:"submitOrder",
+          data: order,
+          success:function(res)
+          {
+            that.setData(
+              {
+                isBusy: false
+              });
+            
+            wx.reLaunch({
+              url: '../orderSubmitSuccess/orderSubmitSuccess'
+            })
+          },
+          fail:function(res)
+          {
+            console.log("call back fail", res);
+            wx.reLaunch({
+              url: '../orderSubmitFail/orderSubmitFail',
+            })
+          }
+        })
+
+/*
       DB.collection("order").add({
         data: order,
         success:function(res)
@@ -161,9 +198,7 @@ Page({
               name:"sendmail",
               data: order
             }).then(res => {
-              wx.reLaunch({
-                url: '../orderSubmitSuccess/orderSubmitSuccess',
-              })
+              
             }).catch(err => {
               
             });
@@ -175,6 +210,7 @@ Page({
           })
         }
       })
+*/
     } else if (index === 1) {
       //cancel
     }
