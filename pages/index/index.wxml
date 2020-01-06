@@ -7,7 +7,7 @@
     <view class="page__ft">
         <view class="weui-grids">
             <block wx:for="{{functions}}" wx:key="*this">
-                <bouton bindtap="gridTapHandle" data-task="{{item}}" class="weui-grid_4" hover-class="weui-grid_active">
+                <bouton bindtap="gridTapHandle" data-task="{{item}}" class="weui-grid_4" hover-class="weui-grid_active" wx:if="{{item.isVisible}}">
                     <i-icon size="24" type="{{item.icon}}" />
                     <view class="weui-grid__label">{{item.name}}</view>
                 </bouton>

@@ -18,15 +18,22 @@ App({
           name: "getOpenId",
           success(res) {
             that.userInfoData.openid = res.result.openid;
+            that.adminInfo.isAdmin = res.result.openid =='oTu2m5GZaByPqBnVkuaQpZ7ETTTI';
+            console.log("isadmin",that.adminInfo.isAdmin);
             //console.log("getOpenid Ok", that.userInfoData.openid);
             wx.setStorageSync('userInfoData', that.userInfoData);
           },
         })
     }
+    else
+    {
+      this.adminInfo.isAdmin = this.userInfoData.openid == "oTu2m5GZaByPqBnVkuaQpZ7ETTTI";
+    }
+
     
     
 
-    /*
+    
     // 登录
     wx.login({
       success: res => {
@@ -54,7 +61,7 @@ App({
         }
       }
     })
-    */
+    
   },
 
   fillUserInfoData()
@@ -73,6 +80,7 @@ App({
     }
   },
 
+  adminInfo:{isAdmin:false},
   userInfoData:{},
   globalData: {
     userInfo: { }

@@ -2,7 +2,21 @@
 <i-cell-group wx:if="{{orders.length}}">
         <i-cell bind:click="actionsTap" wx:for="{{orders}}" wx:key="userOpenId"  wx:for-item="order">
            <i-card title="{{order.description}}" extra="{{order.state}}" >
-    <view slot="content">{{order.responseMsg}}</view>
+    <view slot="content">{{order.responseMsg}}
+     <view class="weui-uploader__bd">
+          <view class="weui-uploader__files" id="uploaderFiles">
+            <!--<block wx:for="{{order.tasks}}" wx:key="item">-->
+            <block>
+              <view class="weui-uploader__file" bindtap="previewImage" data-items="{{order.items}}" id="{{item.path}}">
+                <image class="weui-uploader__img" src="{{order.items[0]}}" mode="aspectFill" />
+                
+              </view>
+            </block>
+
+          </view>
+          
+        </view>
+    </view>
     
     <wxs module="filter" src="../../utils/filter.wxs"></wxs>
     <view slot="footer">订单日期：{{order.dateTimeStr}}</view>

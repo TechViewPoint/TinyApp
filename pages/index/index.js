@@ -5,28 +5,32 @@ Page({
   data: {
     functions: [
       {
-        name:'打印照片',
-        icon:"picture_fill",
-        index:0,
+        name: '打印照片',
+        icon: "picture_fill",
+        index: 0,
+        isVisible:true,
       },
-      
+
       {
         name: '打印文档',
         icon: "document",
-        index:1,
+        index: 1,
+        isVisible:true,
       },
       {
         name: '我的订单',
         icon: "task",
         index: 2,
-
+        isVisible:true,
       },
-      /*
+
       {
-        name: '在线商城',
+        name: '管理员',
         icon: "homepage",
         index: 3,
+        isVisible: app.adminInfo.isAdmin,
       },
+      /*
       {
         name: '文体活动',
         icon: "flashlight",
@@ -53,66 +57,64 @@ Page({
         name: '关于',
         icon: "feedback",
         index: 8,
+        isVisible:true,
+      }
+    ],
 
-      },],
-    printPicture:'打印照片',
-    printDoc: '打印文档',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  gridTapHandle:function(t)
-  {
+
+  gridTapHandle: function (t) {
     //console.log("grid tap",t);
     var index = t.currentTarget.dataset.task.index;
-      if (index == 0)
-      {
-        //console.log("start");
-        wx.navigateTo({
-          url: '../imageUpload/imageUpload'
-        });
-        //console.log("end")
-      }
-      else if (index == 1)
-      {
-        $Toast({
-          content: '该功能暂未开通'
-        });
-      }
-      else if (index == 2) {
-        this.lookupOrder();
-      }
-      else if (index == 3) {
-        $Toast({
-          content: '该功能暂未开通'
-        });
-      }
-      else if (index == 4) {
-        $Toast({
-          content: '该功能暂未开通'
-        });
-      }
-      else if (index == 5) {
-        $Toast({
-          content: '该功能暂未开通'
-        });
-      }
-      else if (index == 6) {
-        $Toast({
-          content: '该功能暂未开通'
-        });
-      }
-      else if (index ==7) {
-        $Toast({
-          content: '该功能暂未开通'
-        });
-      }
-      else if (index == 8) {
-        wx.navigateTo({
-          url: '../about/about'
-        });
-      }
-    
+    if (index == 0) {
+      //console.log("start");
+      wx.navigateTo({
+        url: '../imageUpload/imageUpload'
+      });
+      //console.log("end")
+    }
+    else if (index == 1) {
+      $Toast({
+        content: '该功能暂未开通'
+      });
+    }
+    else if (index == 2) {
+      this.lookupOrder();
+    }
+    else if (index == 3) {
+      wx.navigateTo({
+        url: '../admin/admin'
+      });
+    }
+    else if (index == 4) {
+      $Toast({
+        content: '该功能暂未开通'
+      });
+    }
+    else if (index == 5) {
+      $Toast({
+        content: '该功能暂未开通'
+      });
+    }
+    else if (index == 6) {
+      $Toast({
+        content: '该功能暂未开通'
+      });
+    }
+    else if (index == 7) {
+      $Toast({
+        content: '该功能暂未开通'
+      });
+    }
+    else if (index == 8) {
+      wx.navigateTo({
+        url: '../about/about'
+      });
+    }
+
   },
   bindPrintPictureTap: function () {
     wx.navigateTo({
@@ -131,7 +133,7 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -153,7 +155,7 @@ Page({
       })
     }
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     //console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -162,18 +164,18 @@ Page({
     })
   },
 
-  handleClick:function(){
+  handleClick: function () {
     wx.showModal({
       content: "不可重复上传文件名相同的文件，如果此文件之前上传失败，请先从列表中将其关闭",
       showCancel: 1
     });
   },
 
-  addUser:function(){
+  addUser: function () {
     DB.collection("user").add({
-      data:{
-        name:"roy",
-        gender:true
+      data: {
+        name: "roy",
+        gender: true
       }
     })
   },
@@ -186,24 +188,22 @@ Page({
       }
     })
   },
- 
-  callCloudFun:function(){
+
+  callCloudFun: function () {
     wx.cloud.callFunction({
-      name:"getOpenId",
-      success(res){
-        console.log("ok",res);
+      name: "getOpenId",
+      success(res) {
+        console.log("ok", res);
       },
-      fail(res)
-      {
+      fail(res) {
         console.log("fail", res);
       }
     })
   },
 
-  lookupOrder()
-  {
+  lookupOrder() {
     wx.navigateTo({
       url: '../orderList/orderList'
     })
   }
-})
+});

@@ -1,0 +1,68 @@
+<i-cell-group wx:if="{{orders.length}}">
+  <i-cell wx:for="{{orders}}" wx:key="userOpenId" wx:for-item="order">
+    <i-card title="{{order.description}}" extra="{{order.state}}">
+      <view slot="content">
+        <view>
+          {{order.responseMsg}}
+        </view>
+        <view class="weui-uploader__bd">
+          <view class="weui-uploader__files" id="uploaderFiles">
+            <!--<block wx:for="{{order.tasks}}" wx:key="item">-->
+            <block>
+              <view class="weui-uploader__file" bindtap="previewImage" data-task="{{order.tasks}}" id="{{item.path}}">
+                <image class="weui-uploader__img" src="{{order.tasks[0].path}}" mode="aspectFill" />
+                <!--
+                    <view class="weui-uploader__file-content" >
+                      <icon type="warn" size="23" color="#F43530"
+                      bindtap="closealert" data-task="{{item}}"
+                       wx:if="{{item.state==ERROR}}"></icon>
+                    </view>
+                    <view class="weui-uploader__file-content" wx:if="{{item.state==FINISHED}}">
+                    <icon type="success" size="23" ></icon>
+                    </view>
+                    <view class="weui-uploader__file-content" wx:if="{{item.state==PROCESSING}}">
+                                      <view class="weui-loading"></view>
+                                    </view>
+                    <view class="weui-uploader__file-content" wx:if="{{item.state==UPLOADING}}">{{item.progress}}%</view>-->
+
+              </view>
+            </block>
+
+          </view>
+          <!--<view class="weui-uploader__input-box">
+                <view class="weui-uploader__input" bindtap="handleModelOpen"></view>
+              </view>-->
+
+        </view>
+
+        <view>
+          <text>客户：{{order.name}}</text>
+        </view>
+        <view>
+          <text type="phoneNumber" bindtap="callPhone">电话：{{order.phoneNumber}}</text>
+        </view>
+        <view>
+          <text>地址：{{order.addressDetail}}</text>
+        </view>
+        <view>
+          <text>价格：¥{{order.price}}</text>
+        </view>
+
+        <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="downloadImages" data-order="{{order}}">下载</button>
+        <button class="weui-btn mini-btn" type="warn" size="mini" bindtap="deleteOrder" data-order="{{order}}">删除</button>
+        <picker bindchange="bindOrderStateChange" data-order="{{order}}" value="{{order.stateIndex}}" range="{{states}}">
+          <view class="weui-select">{{states[order.stateIndex]}}</view>
+        </picker>
+      </view>
+
+
+      <view slot="footer">订单日期：{{order.dateTimeStr}}</view>
+    </i-card>
+
+  </i-cell>
+</i-cell-group>
+<view class="page__ft" style="height: 300px" wx:else>
+  <text>
+			没有任何订单
+		</text>
+</view>

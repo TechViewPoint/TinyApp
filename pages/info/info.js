@@ -18,6 +18,7 @@ Page({
       },
      
     ],
+    commentInfo:'0/45',
     buildingArray: ['1栋', '2栋', '3栋', '4栋'],
     unitArray: ['1单元', '2单元', '3单元', '4单元'],
     buildingIndex: 0,
@@ -36,7 +37,8 @@ Page({
     onePicProtectPrice:1.0,
     copy:1.0,
     sum:1.0,
-    deliverPrice:1.5
+    deliverPrice:1.5,
+    info:"价格说明：照片打印统一6寸,0.5元/张,塑封照片1元/张"
   },
   
   onLoad: function () {
@@ -53,7 +55,8 @@ Page({
               {
                 onePicturePrice:price.picPrice.pic,
                 onePicProtectPrice: price.picPrice.picWithProtect,
-                deliverPrice: price.picPrice.deliver
+                deliverPrice: price.picPrice.deliver,
+                info: price.info
               });
           }
           that.updatePrice();
@@ -279,28 +282,31 @@ Page({
     
     this.setData(
       {
-        address:detail.detail.value
+        address:detail.value
       });
   },
   phoneNumberChanged({ detail }) {
+    console.log(detail);
     
     this.setData(
       {
-        phoneNum: detail.detail.value
+        phoneNum: detail.value
       });
   },
   nickNameChanged({ detail }) {
     
     this.setData(
       {
-        name: detail.detail.value
+        name: detail.value
       });
   },
   commentChanged({ detail }) {
 
+    
     this.setData(
       {
-        comment: detail.detail.value
+        commentInfo: detail.value.length.toString()+"/45",
+        comment: detail.value
       });
   }
 })

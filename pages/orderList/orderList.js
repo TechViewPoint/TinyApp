@@ -71,6 +71,7 @@ Page({
       data[i].state = getOrderStateText(state);
     }
   },
+
   getOrderStateText(state)
   {
     switch(state)
@@ -87,6 +88,7 @@ Page({
       return "已完成";
     }
   },
+  
   actionsTap({detail})
   {
     console.log(detail);
@@ -126,5 +128,13 @@ Page({
     var dateTime = year + "-" + month + "-" + day;
     return dateTime;
   },
+  previewImage: function (e) {
+    console.log(e);
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: e.currentTarget.dataset.items
+
+    })
+  }
   
 })
