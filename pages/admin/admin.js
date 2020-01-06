@@ -259,9 +259,14 @@ Page({
 
   callPhone(e) {
     console.log("phone number", e);
-    wx.makePhoneCall({
-      phoneNumber: e //仅为示例，并非真实的电话号码
-    })
+    var number = e.currentTarget.dataset.phonenumber;
+    if (number.length == 11)
+    {
+      wx.makePhoneCall({
+        phoneNumber: number //仅为示例，并非真实的电话号码
+      })
+    }
+    
   },
 
   bindOrderStateChange(e) {

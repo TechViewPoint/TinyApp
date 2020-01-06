@@ -39,13 +39,19 @@
           <text>客户：{{order.name}}</text>
         </view>
         <view>
-          <text type="phoneNumber" bindtap="callPhone">电话：{{order.phoneNumber}}</text>
+          <text type="phoneNumber" data-phoneNumber="{{order.phoneNumber}}" bindtap="callPhone">电话：{{order.phoneNumber}}</text>
         </view>
         <view>
           <text>地址：{{order.addressDetail}}</text>
         </view>
         <view>
           <text>价格：¥{{order.price}}</text>
+        </view>
+        <view>
+          <text>过塑：{{order.needProtection}}</text>
+        </view>
+        <view>
+          <text>数量：{{order.copy}}</text>
         </view>
 
         <button class="weui-btn mini-btn" type="primary" size="mini" bindtap="downloadImages" data-order="{{order}}">下载</button>
