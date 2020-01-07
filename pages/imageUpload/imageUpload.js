@@ -253,17 +253,21 @@ handlers: new Map(),
   nextstep: function () {
     //console.log("task", this.tasks);
     var that = this;
-    if (this.data.tasks.length == 0) {
+    if (!this.data.tasks.some(t=>{return t.state == this.data.FINISHED;})) {
       //if you dont choose any item it will not go on.
       wx.showModal({
-        content: "至少提交一个文件项目",
+        content: "至少成功提交一个项目",
         showCancel: 0
       });
       return;
     }
     var t = function () {
       //save task info to userInfoData in app.js
-      e.userInfoData.tasks = that.data.tasks;
+      e.userInfoData.tasks = that.data.tasks.filter(t=>
+      
+        t.state == that.data.FINISHED
+          
+      );
       //console.log("dada", e.userInfoData.tasks);
       wx.navigateTo({
         url: "/pages/info/info"
@@ -274,7 +278,7 @@ handlers: new Map(),
     }).reduce(function (t, e) {
       return t && ("FINISHED" == e || "ERROR" == e);
     }, !0) ? t() : wx.showModal({
-      content: "还有文档正在上传中，返回将丢失这部分文档，确认继续吗？",
+      content: "还有文件正在上传中，继续将丢失这部分文件，确认继续吗？",
       success: function (e) {
         e.confirm && t();
       }

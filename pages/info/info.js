@@ -112,6 +112,16 @@ Page({
   {
     if (!this.checkForm())
       return;
+
+    if (this.data.isBusy) {
+      console.log("submit is busy");
+      wx.showToast({
+        title: '提交中请稍后,若长时间无响应请检查网络连接',
+        icon: 'loading',
+        duration: 2500
+      });
+      return;
+    }
     this.setData({
       modelVisible: true
     });
@@ -119,14 +129,13 @@ Page({
 
   handleSubmitClick({ detail})
   {
-    if(this.data.isBusy)
-    return;
     const index = detail.index;
 
     if (index === 0) {
       //ok go ahead
       //console.log(app.userInfoData);
-
+      this.data.isBusy = true;
+      
       //save userinfo to local
       app.userInfoData.name = this.data.name;
       app.userInfoData.address = this.data.address;
@@ -135,6 +144,7 @@ Page({
 
       //add order
       var fileItems = [];
+      console.log("tasks is right ot not ", app.userInfoData.tasks);
       for (var i = 0; i<app.userInfoData.tasks.length;i++)
       {
         fileItems.unshift(app.userInfoData.tasks[i].cloudId);
@@ -161,10 +171,7 @@ Page({
         dateTime: Date.parse(new Date()),
         responseMsg:[]
       }
-      this.setData(
-        {
-          isBusy:true
-        });
+      
       var that = this;
       wx.cloud.callFunction(
         {
@@ -172,22 +179,26 @@ Page({
           data: order,
           success:function(res)
           {
-            that.setData(
-              {
-                isBusy: false
-              });
-            
+            that.data.isBusy = false;
+            console.log("submit order call back ok", res);
             wx.reLaunch({
               url: '../orderSubmitSuccess/orderSubmitSuccess'
             })
           },
           fail:function(res)
           {
-            console.log("call back fail", res);
+            that.data.isBusy = false;
+            console.log("submit order call back fail", res);
             wx.reLaunch({
               url: '../orderSubmitFail/orderSubmitFail',
             })
+          },
+          complete:function(res)
+          {
+            console.log("submit order call back complete", res);
+            that.data.isBusy = false;
           }
+          
         })
 
 /*

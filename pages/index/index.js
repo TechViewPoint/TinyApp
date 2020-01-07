@@ -65,6 +65,14 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
+  onShareAppMessage: function () {
+    return {
+      title: "自打印",
+      desc: "照片在线打印，送货上门",
+      path: "/pages/index/index",
+      imageUrl: "/images/share.png"
+    };
+  },
 
   gridTapHandle: function (t) {
     //console.log("grid tap",t);
