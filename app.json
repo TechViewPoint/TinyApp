@@ -3,18 +3,13 @@
     "pages/index/index",
     "pages/info/info",
     
-    "pages/admin/admin",
     
+    "pages/admin/admin",
     "pages/orderSubmitFail/orderSubmitFail",
     "pages/orderSubmitSuccess/orderSubmitSuccess",
-    
     "pages/about/about",
-    
-    
     "pages/imageUpload/imageUpload",
     "pages/upload/upload",
-    
-    
     "testPage/test",
     "pages/orderList/orderList",
     "pages/logs/logs"

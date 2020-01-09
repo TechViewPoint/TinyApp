@@ -27,3 +27,15 @@ icon{
     margin-top: 10px;
     text-align: left;
 }
+
+.gridButton
+{
+border: none;
+background-color: transparent;
+outline: none; 
+}
+button::after{
+
+   border: none;
+
+}

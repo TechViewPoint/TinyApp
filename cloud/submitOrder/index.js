@@ -42,7 +42,10 @@ exports.main = async (event, context) => {
       state: event.state,
       dateTime: event.dateTime,
       responseMsg: event.responseMsg,
-      price: event.price
+      price: event.price,
+      userInfo: event.userInfo,
+      orderName:event.orderName,
+      orderType: event.orderType
     },
     success: function (res) {
 
@@ -51,7 +54,7 @@ exports.main = async (event, context) => {
 
     }
   })
-  mailOptions.subject="您有新订单";
+  mailOptions.subject = "您有新订单-" + event.name;
   mailOptions.text = JSON.stringify(event);
   const info = await transporter.sendMail(mailOptions);
   return [databaseRes,info];

@@ -31,7 +31,7 @@ Page({
       success: function (res) {
         for (var i = 0; i < res.data.length; i++) {
           res.data[i].dateTimeStr = that.timestamp2String(res.data[i].dateTime);
-          res.data[i].description = res.data[i].items.length.toString() + "个项目";
+          res.data[i].description = res.data[i].orderName+"("+ res.data[i].items.length.toString() + "个项目)";
         }
         //handleData(res.data);
 

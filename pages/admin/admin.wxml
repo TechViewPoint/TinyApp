@@ -1,6 +1,6 @@
 <i-cell-group wx:if="{{orders.length}}">
   <i-cell wx:for="{{orders}}" wx:key="userOpenId" wx:for-item="order">
-    <i-card title="{{order.description}}" extra="{{order.state}}">
+    <i-card thumb="{{order.userInfo.avatarUrl}}" title="{{order.description}}" extra="{{order.state}}">
       <view slot="content">
         <view>
           {{order.responseMsg}}
@@ -42,7 +42,7 @@
           <text type="phoneNumber" data-phoneNumber="{{order.phoneNumber}}" bindtap="callPhone">电话：{{order.phoneNumber}}</text>
         </view>
         <view>
-          <text>地址：{{order.addressDetail}}</text>
+          <text>地址：{{order.address.provinceName+order.address.cityName+order.address.countyName+order.address.detailInfo}}</text>
         </view>
         <view>
           <text>价格：¥{{order.price}}</text>

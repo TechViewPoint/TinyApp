@@ -39,10 +39,9 @@ Page({
   chooseImage: function (e) {
     var that = this;
     wx.chooseImage({
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      sizeType: ['original'], 
+      sourceType: ['album', 'camera'], 
       success: function (res) {
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         that.setData({
           files: that.data.files.concat(res.tempFilePaths)
         });
@@ -92,6 +91,7 @@ handlers: new Map(),
     wx.chooseMessageFile({
       count: 9,
       type: 'image',
+      sizeType: ['original'],
       extension: ["jpg", "png", "jpeg"],
       success: function (e) {
         //console.log("eeeed", e);
@@ -268,7 +268,8 @@ handlers: new Map(),
         t.state == that.data.FINISHED
           
       );
-      //console.log("dada", e.userInfoData.tasks);
+      e.userInfoData.orderType ={orderName:"六寸照片打印",typeCode :1};
+      
       wx.navigateTo({
         url: "/pages/info/info"
       })

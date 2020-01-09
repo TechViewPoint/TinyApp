@@ -1,4 +1,5 @@
 const { $Toast } = require('../../lib/iview/base/index');
+const authorizer = require('../../utils/authorizer.js')
 const app = getApp()
 const DB = wx.cloud.database()
 Page({
@@ -9,6 +10,8 @@ Page({
         icon: "picture_fill",
         index: 0,
         isVisible:true,
+        startColor:"#4facfe",
+        endColor:"#00f2fe"
       },
 
       {
@@ -16,12 +19,16 @@ Page({
         icon: "document",
         index: 1,
         isVisible:true,
+        startColor: "#4facfe",
+        endColor: "#00f2fe"
       },
       {
         name: '我的订单',
         icon: "task",
         index: 2,
         isVisible:true,
+        startColor: "#4facfe",
+        endColor: "#00f2fe"
       },
 
       {
@@ -29,6 +36,8 @@ Page({
         icon: "homepage",
         index: 3,
         isVisible: app.adminInfo.isAdmin,
+        startColor: "#4facfe",
+        endColor: "#00f2fe"
       },
       /*
       {
@@ -58,12 +67,15 @@ Page({
         icon: "feedback",
         index: 8,
         isVisible:true,
+        startColor: "#4facfe",
+        endColor: "#00f2fe"
       }
     ],
 
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('block.open-type.getUserInfo')
+
   },
   onShareAppMessage: function () {
     return {
@@ -136,6 +148,8 @@ Page({
   },
 
   onLoad: function () {
+    
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -152,6 +166,7 @@ Page({
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
+      console.log("getting user info");
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo
@@ -162,51 +177,25 @@ Page({
         }
       })
     }
+    
   },
+
   getUserInfo: function (e) {
-    //console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
-
-  handleClick: function () {
-    wx.showModal({
-      content: "不可重复上传文件名相同的文件，如果此文件之前上传失败，请先从列表中将其关闭",
-      showCancel: 1
-    });
-  },
-
-  addUser: function () {
-    DB.collection("user").add({
-      data: {
-        name: "roy",
-        gender: true
-      }
-    })
-  },
-
-  deleteUser: function () {
-    DB.collection("user").delete({
-      data: {
-        name: "roy",
-        gender: true
-      }
-    })
-  },
-
-  callCloudFun: function () {
-    wx.cloud.callFunction({
-      name: "getOpenId",
-      success(res) {
-        console.log("ok", res);
-      },
-      fail(res) {
-        console.log("fail", res);
-      }
-    })
+    if (app.globalData.userInfo)
+    {
+      this.gridTapHandle(e);
+      return;
+    }
+    if (e.detail.userInfo)
+    {
+      console.log("get user info again");
+      app.globalData.userInfo = e.detail.userInfo
+      this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+      }),
+      this.gridTapHandle(e);
+    }
   },
 
   lookupOrder() {

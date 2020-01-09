@@ -1,11 +1,14 @@
 //info.js
 const { $Message } = require('../../lib/iview/base/index');
 const { $Toast } = require('../../lib/iview/base/index');
+const authorizer = require('../../utils/authorizer.js')
+
 const app = getApp()
 const DB = wx.cloud.database()
 Page({
   modelVisible:false,
-  data: {
+  data: 
+  {
     isBusy:false,
     submitActions: [
       {
@@ -19,31 +22,39 @@ Page({
      
     ],
     commentInfo:'0/45',
-    buildingArray: ['1栋', '2栋', '3栋', '4栋'],
-    unitArray: ['1单元', '2单元', '3单元', '4单元'],
-    buildingIndex: 0,
-    unitIndex: 0,
     orderName:'',
     name: '',
     phoneNum: '',
     address: '',
     comment: '',
-    value5: '',
-    value6: '',
+    postalCode:'',
+    provinceName:'',
+    cityName:'',
+    countyName:'',
+    nationalCode:'',
+    detailInfo:'',
     totalPrice: 0,
     protectionChecked: false,
     disabled: false,
-    onePicturePrice:0.5,
-    onePicProtectPrice:1.0,
+    onePicturePrice:1,
+    onePicProtectPrice:1.5,
     copy:1.0,
     sum:1.0,
-    deliverPrice:1.5,
+    deliverPrice:1,
+    orderType:0,
     info:"价格说明：照片打印统一6寸,0.5元/张,塑封照片1元/张"
   },
   
-  onLoad: function () {
+  onLoad: function () 
+  {
 
     var that = this;
+    this.setData(
+      {
+        orderType: app.userInfoData.orderType.typeCode,
+        orderName: app.userInfoData.orderType.orderName
+      })
+
     DB.collection("price").get(
       {
         success: function (res) {
@@ -66,21 +77,102 @@ Page({
           console.log("get price fail", res);
         }
       });
-    
-    this.setData({
-      orderName:"6寸照片打印",
-      name: app.userInfoData.name ? app.userInfoData.name:"",
-      phoneNum: app.userInfoData.phoneNum ? app.userInfoData.phoneNum:"",
-      address: app.userInfoData.address ? app.userInfoData.address:"",
-      unitIndex: app.userInfoData.unit,
-      buildingIndex: app.userInfoData.building,
-      sum: app.userInfoData.tasks ? app.userInfoData.tasks.length:0,
-    });
 
+    if (!app.userInfoData.name)
+    {
+      wx.chooseAddress({
+        success(res) {
+          console.log(res.userName)
+          console.log(res.postalCode)
+          console.log(res.provinceName)
+          console.log(res.cityName)
+          console.log(res.countyName)
+          console.log(res.detailInfo)
+          console.log(res.nationalCode)
+          console.log(res.telNumber)
+          app.userInfoData.name = res.userName;
+          app.userInfoData.postalCode = res.postalCode;
+          app.userInfoData.provinceName = res.provinceName;
+          app.userInfoData.cityName = res.cityName;
+          app.userInfoData.countyName = res.countyName;
+          app.userInfoData.detailInfo = res.detailInfo;
+          app.userInfoData.nationalCode = res.nationalCode;
+          app.userInfoData.phoneNum = res.telNumber;
 
-    
+          that.setData({
+            name: app.userInfoData.name,
+            phoneNum: app.userInfoData.phoneNum,
+            address: app.userInfoData.provinceName + app.userInfoData.cityName + app.userInfoData.countyName + app.userInfoData.detailInfo,
+            detailInfo: app.userInfoData.detailInfo,
+            postalCode: app.userInfoData.postalCode,
+            cityName: app.userInfoData.cityName,
+            nationalCode: app.userInfoData.nationalCode,
+            provinceName: app.userInfoData.provinceName,
+            countyName: app.userInfoData.countyName,
+            sum: app.userInfoData.tasks ? app.userInfoData.tasks.length : 0,
+          });
+        }
+      })
+    }
+    else
+    {
+      that.setData({
+        
+        name: app.userInfoData.name,
+        phoneNum: app.userInfoData.phoneNum,
+        address: app.userInfoData.provinceName + app.userInfoData.cityName + app.userInfoData.countyName + app.userInfoData.detailInfo,
+        detailInfo: app.userInfoData.detailInfo,
+        postalCode: app.userInfoData.postalCode,
+        cityName: app.userInfoData.cityName,
+        nationalCode: app.userInfoData.nationalCode,
+        provinceName: app.userInfoData.provinceName,
+        countyName: app.userInfoData.countyName,   
+        sum: app.userInfoData.tasks ? app.userInfoData.tasks.length : 0,
+      });
+    }    
     //console.log(app.userInfoData);
+  },
 
+  chooseAddress()
+  {
+
+
+    var that = this;
+
+
+    authorizer.authorize("scope.address", function (res) {
+      console.log('success', res);
+      wx.chooseAddress({
+        success: function (res) {
+          console.log('address ok', res)
+          app.userInfoData.name = res.userName;
+          app.userInfoData.postalCode = res.postalCode;
+          app.userInfoData.provinceName = res.provinceName;
+          app.userInfoData.cityName = res.cityName;
+          app.userInfoData.countyName = res.countyName;
+          app.userInfoData.detailInfo = res.detailInfo;
+          app.userInfoData.nationalCode = res.nationalCode;
+          app.userInfoData.phoneNum = res.telNumber;
+          that.setData({
+            name: app.userInfoData.name,
+            phoneNum: app.userInfoData.phoneNum,
+            address: app.userInfoData.provinceName + app.userInfoData.cityName + app.userInfoData.countyName + app.userInfoData.detailInfo,
+            detailInfo: app.userInfoData.detailInfo,
+            postalCode: app.userInfoData.postalCode,
+            cityName: app.userInfoData.cityName,
+            nationalCode: app.userInfoData.nationalCode,
+            provinceName: app.userInfoData.provinceName,
+            countyName: app.userInfoData.countyName,
+          });
+
+        }
+      });
+    }, function (err) {
+      console.log('denyback', err);
+    }, function (err) {
+      console.log('deniedBack', err);
+    });
+   
   },
 
   updatePrice()
@@ -132,19 +224,12 @@ Page({
     const index = detail.index;
 
     if (index === 0) {
-      //ok go ahead
-      //console.log(app.userInfoData);
+     
       this.data.isBusy = true;
-      
-      //save userinfo to local
-      app.userInfoData.name = this.data.name;
-      app.userInfoData.address = this.data.address;
-      app.userInfoData.phoneNum = this.data.phoneNum;
       wx.setStorageSync('userInfoData', app.userInfoData);
 
-      //add order
       var fileItems = [];
-      console.log("tasks is right ot not ", app.userInfoData.tasks);
+      console.log("tasks is right or not ", app.userInfoData.tasks);
       for (var i = 0; i<app.userInfoData.tasks.length;i++)
       {
         fileItems.unshift(app.userInfoData.tasks[i].cloudId);
@@ -155,13 +240,16 @@ Page({
         items: fileItems,
         address:
         {
-          building: 1,
-          unit: 1,
-          city: "桂林",
-          province: "广西",
-          street: "世纪东路"
+          cityName: this.data.cityName,
+          provinceName: this.data.provinceName,
+          countyName: this.data.countyName,
+          detailInfo: this.data.detailInfo,
+          nationalCode: this.data.nationalCode,
+          postalCode: this.data.postalCode
         },
-        addressDetail: this.data.address,
+        orderName:this.data.orderName,
+        orderType:this.data.orderType,
+        userInfo: app.globalData.userInfo,
         userOpenId: app.userInfoData.openid,
         copy: this.data.copy,
         needProtection: this.data.protectionChecked,
@@ -201,30 +289,7 @@ Page({
           
         })
 
-/*
-      DB.collection("order").add({
-        data: order,
-        success:function(res)
-        {
-          //send email for notification
-          wx.cloud.callFunction(
-            {
-              name:"sendmail",
-              data: order
-            }).then(res => {
-              
-            }).catch(err => {
-              
-            });
-        },
-        fail:function(res)
-        {
-          wx.reLaunch({
-            url: '../orderSubmitFail/orderSubmitFail',
-          })
-        }
-      })
-*/
+
     } else if (index === 1) {
       //cancel
     }
@@ -244,7 +309,7 @@ Page({
       return false;
     }
     //console.log("phone num", this.data.phoneNum.length);
-    if (this.isStringEmpty(this.data.phoneNum) || this.data.phoneNum.length!=11) {
+    if (this.isStringEmpty(this.data.phoneNum)) {
       $Toast({
         content: '检查电话填写是否正确'
       });
@@ -270,7 +335,8 @@ Page({
     wx.setStorageSync('userInfoData', app.userInfoData);
   },
 
-  bindUnitPickerChange: function (i) {
+  bindUnitPickerChange: function (i) 
+  {
     
     this.setData({
       unitIndex: i.detail.value
@@ -296,6 +362,7 @@ Page({
         address:detail.value
       });
   },
+
   phoneNumberChanged({ detail }) {
     console.log(detail);
     
@@ -311,9 +378,9 @@ Page({
         name: detail.value
       });
   },
-  commentChanged({ detail }) {
 
-    
+  commentChanged({ detail }) 
+  {
     this.setData(
       {
         commentInfo: detail.value.length.toString()+"/45",
