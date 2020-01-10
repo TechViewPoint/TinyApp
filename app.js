@@ -1,4 +1,4 @@
-//app.js
+require("./utils/vrequest.js")
 App({
   onLaunch: function () {
     var that = this;

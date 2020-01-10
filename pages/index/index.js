@@ -15,8 +15,8 @@ Page({
       },
 
       {
-        name: '打印文档',
-        icon: "document",
+        name: '商城',
+        icon: "shop_fill",
         index: 1,
         isVisible:true,
         startColor: "#4facfe",
@@ -97,8 +97,8 @@ Page({
       //console.log("end")
     }
     else if (index == 1) {
-      $Toast({
-        content: '该功能暂未开通'
+      wx.navigateTo({
+        url: '../shopItems/shopItems'
       });
     }
     else if (index == 2) {

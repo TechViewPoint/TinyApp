@@ -1,0 +1,36 @@
+
+<view class="page__bd listMargin">
+<block wx:for="{{tabItemsData}}" wx:for-item="item">
+ <view class="weui-panel weui-panel_access">
+           
+            <view class="weui-panel__bd">
+                <view bindtap="handleItemClick"  data-item="{{item}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_large_in-appmsg">
+                        <image class="weui-media-box__thumb" src="{{item.imgUrl}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">{{item.title}}</view>
+                        <view class="weui-media-box__desc">{{item.info}}</view>
+                    </view>
+                </view>
+                
+            </view>
+            <view class="weui-panel__ft">
+            </view>
+        </view>
+</block>
+
+</view>
+
+<view class="weui-footer_fixed-top">
+<i-tabs current="{{ current_scroll }}" bindchange="handleChangeScroll">
+    <i-tab wx:if="{{categories.length>0}}" key="{{categories[0].key}}" title="{{categories[0].name}}"></i-tab>
+    <i-tab wx:if="{{categories.length>1}}" key="{{categories[1].key}}" title="{{categories[1].name}}"></i-tab>
+    <i-tab wx:if="{{categories.length>2}}" key="{{categories[2].key}}" title="{{categories[2].name}}"></i-tab>
+    <i-tab wx:if="{{categories.length>3}}" key="{{categories[3].key}}" title="{{categories[3].name}}"></i-tab>
+     <i-tab wx:if="{{categories.length>4}}" key="{{categories[4].key}}" title="{{categories[4].name}}"></i-tab>
+      <i-tab wx:if="{{categories.length>5}}" key="{{categories[5].key}}" title="{{categories[5].name}}"></i-tab>
+       <i-tab wx:if="{{categories.length>6}}" key="{{categories[6].key}}" title="{{categories[6].name}}"></i-tab>
+        <i-tab wx:if="{{categories.length>7}}" key="{{categories[7].key}}" title="{{categories[7].name}}"></i-tab>
+</i-tabs>
+</view>
