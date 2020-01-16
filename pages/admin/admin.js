@@ -6,7 +6,7 @@ Page({
 
   data: {
     orders: [],
-    states: ["待处理", "处理中", "配送中", "已完成"],
+    states: ["待处理","待付款", "处理中", "配送中", "已完成"],
     stateIndex: 0,
     WAITING: "待处理",
     ONLINE: "ONLINE",
@@ -29,24 +29,32 @@ Page({
 
     DB.collection('order').get({
       success: function (res) {
+        console.log("admin ok",res);
         for (var i = 0; i < res.data.length; i++) {
           res.data[i].dateTimeStr = that.timestamp2String(res.data[i].dateTime);
-          res.data[i].description = res.data[i].orderName+"("+ res.data[i].items.length.toString() + "个项目)";
+          res.data[i].description = res.data[i].orderName;
         }
+        
         //handleData(res.data);
 
         console.log(res.data);
+        
         for (var j = 0; j < res.data.length; j++) {
           var tasks = [];
-          for (var k = 0; k < res.data[j].items.length; k++) {
-            tasks.push({
-              path: res.data[j].items[k],
-              state: that.data.ONLINE,
-            });
+          if (res.data[j].orderType == 1)
+          {
+            for (var k = 0; k < res.data[j].items.length; k++) {
+              tasks.push({
+                path: res.data[j].items[k],
+                state: that.data.ONLINE,
+              });
+            }
           }
           res.data[j].stateIndex = that.getStateIndex(res.data[j].state);
           res.data[j].tasks = tasks;
+          
         }
+        console.log("here");
         that.setData({
           orders: res.data
         });
@@ -197,14 +205,10 @@ Page({
         console.log(res);
         if (res.confirm) {
           that.downloadOrderItems(order);
-
         } else {
-
         }
       }
     });
-
-
   },
 
   deleteOrder(order) {

@@ -6,11 +6,11 @@
             <view class="weui-panel__bd">
                 <view bindtap="handleItemClick"  data-item="{{item}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                     <view class="weui-media-box__hd weui-media-box__hd_large_in-appmsg">
-                        <image class="weui-media-box__thumb" src="{{item.imgUrl}}" />
+                        <image class="weui-media-box__thumb" src="{{item.itemImgs[0]}}" />
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                         <view class="weui-media-box__title">{{item.title}}</view>
-                        <view class="weui-media-box__desc">{{item.info}}</view>
+                        <view class="priceText weui-media-box__desc">${{item.price}}</view>
                     </view>
                 </view>
                 

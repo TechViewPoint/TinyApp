@@ -87,7 +87,7 @@ Page({
   handleItemClick(data)
   {
     console.log("handleItemClick",data);    
-    app.userInfoData.itemSelected = data.currentTarget.dataset.item;
+    app.userInfoData.item = data.currentTarget.dataset.item;
 
     wx.navigateTo({
       url: '../itemDetail/itemDetail'

@@ -1,20 +1,25 @@
 const urls = [
 
-  'http://1252076676.vod2.myqcloud.com/d7eee309vodgzp1252076676/30287db75285890794073167278/WVQpwkgnb9EA.mp4',
-  'http://1252076676.vod2.myqcloud.com/d7eee309vodgzp1252076676/320e66af5285890794073202694/8ksYlGUevogA.mp4',
-  'http://1252076676.vod2.myqcloud.com/d7eee309vodgzp1252076676/30010ead5285890794073141537/DGAx2EgLMEYA.mp4',
-  'http://1252076676.vod2.myqcloud.com/d7eee309vodgzp1252076676/320ed9255285890794073203062/JyqT3zzDH4MA.mp4',
-  'http://1252076676.vod2.myqcloud.com/d7eee309vodgzp1252076676/320ee16a5285890794073203247/okwtzftAVuwA.mp4',
-  'http://1252076676.vod2.myqcloud.com/d7eee309vodgzp1252076676/2fcc59275285890794073114126/ySa5LZ3k4EcA.mp4'
+  'https://techviewpoint.github.io/journey/cdn/videos/test.mp4',
+  
 ]
 
 const videoList = urls.map((url, index) => ({ id: index + 1, url }))
+const app = getApp();
 Page({
-
-
   data: {
-    videoList
+    videoList,
+    item:null
   },
+  onLoad()
+  {
+    console.log("detail", app.userInfoData.item);
+    this.setData(
+      {
+        item: app.userInfoData.item
+      })
+  },
+
   onPlay(e) { },
 
   onPause(e) {
@@ -33,6 +38,15 @@ Page({
 
   onLoadedMetaData(e) {
     console.log('LoadedMetaData', e)
+  },
+
+  handleBuy()
+  {
+    app.userInfoData.item = this.data.item;
+    app.userInfoData.orderType = { orderName: app.userInfoData.item.title, typeCode: 2 };
+    wx.navigateTo({
+      url: '../info/info',
+    })
   }
 
 })

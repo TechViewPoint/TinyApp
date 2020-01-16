@@ -1,6 +1,6 @@
 
 <i-panel>
-  <i-notice-bar icon="systemprompt" closable loop speed="1000">
+  <i-notice-bar icon="systemprompt" closable loop speed="1000" wx:if="{{orderType==1}}">
     {{info}}
   </i-notice-bar>
 </i-panel>
@@ -123,3 +123,22 @@
 </i-modal>
 <i-message id="message" />
 <i-toast id="toast" />
+
+<view class="weui-demo-dialog {{isOpenConfirtDialog ? 'weui-demo-dialog_show' : ''}}">
+          <view class="weui-mask" bindtap="closeDialog"></view>
+          <view class="weui-dialog__wrp" bindtap="closeDialog">
+              <view class="weui-dialog" catchtap="stopEvent">
+                <view class="weui-dialog__hd">
+                  <view class="weui-dialog__title">支付</view>
+                </view>
+                <view class="weui-dialog__bd">
+                <text>扫描二维码支付,金额为¥{{totalPrice}}</text>
+                  <image class="weui-article__img" src="../../images/payqrcode.png" mode="aspectFit" style="max-width:100%;"/>
+                </view>
+                <view class="weui-dialog__ft">
+                    <view class="weui-dialog__btn weui-dialog__btn_default" bindtap="closeDialog">取消</view>
+                    <view class="weui-dialog__btn" bindtap="payIt">我已支付</view>
+                </view>
+              </view>
+          </view>
+        </view>

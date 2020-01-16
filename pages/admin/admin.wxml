@@ -5,7 +5,7 @@
         <view>
           {{order.responseMsg}}
         </view>
-        <view class="weui-uploader__bd">
+        <view class="weui-uploader__bd" wx:if="{{order.orderType==1}}">
           <view class="weui-uploader__files" id="uploaderFiles">
             <!--<block wx:for="{{order.tasks}}" wx:key="item">-->
             <block>

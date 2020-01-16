@@ -1,1 +1,3 @@
 .listMargin{margin-top: 50px}
+.weui-media-box__title{margin-top: 2px}
+.priceText{color: red}

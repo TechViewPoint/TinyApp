@@ -34,7 +34,7 @@ exports.main = async (event, context) => {
       name: event.name,
       items: event.items,
       address: event.address,
-      addressDetail: event.addressDetail,
+      itemId: event.itemId,
       phoneNumber: event.phoneNumber,
       userOpenId: event.userOpenId,
       copy: event.copy,
